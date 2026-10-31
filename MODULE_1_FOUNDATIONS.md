@@ -8,11 +8,25 @@
 
 ## Architecture diagram
 
-The diagram below is the module's visual reference architecture. It shows the trusted orchestration boundary: model decisions are validated and authorized before tools execute.
+```mermaid
+flowchart TD
+    U([User goal]) --> API[Application API]
+    API --> O[Agent orchestrator]
+    O --> S[(Task state and context)]
+    S --> L[LLM / decision engine]
+    L --> D{Next action?}
+    D -->|Use tool| V[Validate tool and arguments]
+    V --> P[Policy and authorization check]
+    P --> X[Tool executor]
+    X --> T[External tools / APIs]
+    T --> R[Tool result]
+    R --> S
+    D -->|Finish| E[Response verification]
+    E --> F([Final response])
+    D -->|Cannot proceed| H([Explain limitation / ask user])
+```
 
-![Module 1 — Foundations of Agentic AI architecture](architecture-diagrams/module-1.svg)
-
-[Open the full-size SVG](architecture-diagrams/module-1.svg).
+> This is a conceptual reference architecture. Adapt the components and control flow to the system requirements.
 
 ---
 
