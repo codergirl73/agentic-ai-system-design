@@ -1,6 +1,10 @@
 # Curriculum v1 — Agentic AI System Design
 
 ## Module 1 — Foundations of Agentic AI
+
+**Full learning material:** [MODULE_1_FOUNDATIONS.md](MODULE_1_FOUNDATIONS.md) — detailed explanations, architecture diagrams, execution flow, failure handling, research assistant system design, interview answers, and exercises.
+
+**Python implementation:** [implementations/module-1-foundations/](implementations/module-1-foundations/) — dependency-free agent and unit tests.
 1. What is an AI agent?
 2. AI model vs chatbot vs AI agent
 3. What makes a system agentic?
