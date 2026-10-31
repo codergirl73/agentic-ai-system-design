@@ -6,14 +6,23 @@
 
 ## Architecture diagram
 
-An advanced RAG system can grade evidence, adapt its retrieval strategy, and iterate when evidence is insufficient.
+```mermaid
+flowchart TD
+    Q([User question]) --> S[Select retrieval strategy]
+    S --> R[Retrieve evidence]
+    R --> G[Grade evidence quality]
+    G --> D{Enough relevant evidence?}
+    D -->|Yes| C[Compress and assemble context]
+    C --> A[Generate answer with citations]
+    A --> V[Verify grounding]
+    V --> O([Return answer])
+    D -->|No| P[Rewrite query / expand search]
+    P --> R
+    V -->|Unsupported claim| P
+    P -->|Retry or budget exhausted| U([Return limitation and uncertainty])
+```
 
-![Module 6 — Advanced RAG architecture](architecture-diagrams/module-6.svg)
-
-[Open the full-size SVG](architecture-diagrams/module-6.svg).
-
-> Diagram flow: User question → strategy router → retrieve evidence → grade evidence → sufficient? → refine/retrieve again or synthesize with citations.  
-> This is a conceptual reference architecture. Adapt components and control flow to the system requirements; it is not a mandatory implementation blueprint.
+> This is a conceptual reference architecture. Adapt the components and control flow to the system requirements.
 
 ---
 
