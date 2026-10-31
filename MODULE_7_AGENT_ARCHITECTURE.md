@@ -6,14 +6,28 @@
 
 ## Architecture diagram
 
-An orchestration layer coordinates agent reasoning, tools, memory, specialist workers, and human approval.
+```mermaid
+flowchart TD
+    U([Task request]) --> O[Supervisor / orchestrator]
+    O --> P[Plan and decompose task]
+    P --> S[(Shared task state)]
+    S --> W1[Worker agent: research]
+    S --> W2[Worker agent: analysis]
+    S --> W3[Worker agent: synthesis]
+    W1 --> G[Tool gateway]
+    W2 --> G
+    W3 --> G
+    G --> V[Validate schema, policy, and permissions]
+    V --> T[Approved tools and services]
+    T --> S
+    S --> C[Aggregate and evaluate results]
+    C --> H{Human approval required?}
+    H -->|Yes| A[Human review]
+    H -->|No| F([Final result])
+    A --> F
+```
 
-![Module 7 — Agent Architecture and Orchestration architecture](architecture-diagrams/module-7.svg)
-
-[Open the full-size SVG](architecture-diagrams/module-7.svg).
-
-> Diagram flow: Task request → supervisor/planner → state and memory / worker agents → tool gateway → services → approval and result aggregation.  
-> This is a conceptual reference architecture. Adapt components and control flow to the system requirements; it is not a mandatory implementation blueprint.
+> This is a conceptual reference architecture. Adapt the components and control flow to the system requirements.
 
 ---
 
