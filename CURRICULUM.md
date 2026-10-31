@@ -14,6 +14,8 @@
 **Implementation milestone:** Build a minimal goal-oriented Python agent, then extend it with a tool and bounded execution loop.
 
 ## Module 2 — RAG Fundamentals
+
+**Module guide and embedded architecture:** [MODULE_2_RAG_FUNDAMENTALS.md](MODULE_2_RAG_FUNDAMENTALS.md)
 1. What is Retrieval-Augmented Generation (RAG)?
 2. Why RAG: freshness, grounding, and provenance
 3. RAG vs fine-tuning vs long-context prompting
@@ -23,6 +25,8 @@
 **Implementation milestone:** Build document Q&A with source references.
 
 ## Module 3 — Document Processing and Embeddings
+
+**Module guide and embedded architecture:** [MODULE_3_DOCUMENT_PROCESSING.md](MODULE_3_DOCUMENT_PROCESSING.md)
 1. Document ingestion and parsing
 2. Cleaning, normalization, and metadata
 3. Chunking strategies and overlap
@@ -33,6 +37,8 @@
 **Implementation milestone:** Build configurable ingestion, chunking, embedding, and indexing.
 
 ## Module 4 — Information Retrieval
+
+**Module guide and embedded architecture:** [MODULE_4_INFORMATION_RETRIEVAL.md](MODULE_4_INFORMATION_RETRIEVAL.md)
 1. Information retrieval foundations
 2. Lexical retrieval and inverted indexes
 3. BM25 and sparse retrieval
@@ -43,6 +49,8 @@
 **Implementation milestone:** Compare BM25, dense, and hybrid retrieval on an evaluation set.
 
 ## Module 5 — Advanced Retrieval
+
+**Module guide and embedded architecture:** [MODULE_5_ADVANCED_RETRIEVAL.md](MODULE_5_ADVANCED_RETRIEVAL.md)
 1. Query rewriting and normalization
 2. Multi-query retrieval
 3. Query expansion and decomposition
@@ -54,6 +62,8 @@
 **Implementation milestone:** Build multi-query retrieval with RRF and reranking; evaluate each stage.
 
 ## Module 6 — Advanced RAG
+
+**Module guide and embedded architecture:** [MODULE_6_ADVANCED_RAG.md](MODULE_6_ADVANCED_RAG.md)
 1. Context assembly and contextual compression
 2. Multi-hop and iterative retrieval
 3. Self-RAG
@@ -65,6 +75,8 @@
 **Implementation milestone:** Build and evaluate an advanced RAG workflow.
 
 ## Module 7 — Agent Architecture and Orchestration
+
+**Module guide and embedded architecture:** [MODULE_7_AGENT_ARCHITECTURE.md](MODULE_7_AGENT_ARCHITECTURE.md)
 1. Tool calling and tool schemas
 2. Planning and task decomposition
 3. State, memory, and context management
@@ -77,6 +89,8 @@
 **Implementation milestone:** Build a stateful workflow with typed tools and human approval for consequential actions.
 
 ## Module 8 — Production Engineering
+
+**Module guide and embedded architecture:** [MODULE_8_PRODUCTION_ENGINEERING.md](MODULE_8_PRODUCTION_ENGINEERING.md)
 1. Evaluation datasets and offline evaluation
 2. Tracing, observability, and debugging
 3. Reliability, retries, timeouts, and fallbacks
