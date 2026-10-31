@@ -6,14 +6,23 @@
 
 ## Architecture diagram
 
-Production controls surround the agent runtime with authentication, policy enforcement, observability, evaluation, and monitoring.
+```mermaid
+flowchart TD
+    U([Client request]) --> A[API gateway and authentication]
+    A --> P[Policy, authorization, and budgets]
+    P --> R[Agent runtime]
+    R --> G[Model and tool gateway]
+    G --> X[Models and external tools]
+    X --> R
+    R --> O[Structured traces and metrics]
+    O --> E[Evaluation and regression checks]
+    E --> M[Monitoring and alerting]
+    M -->|Feedback / incident| R
+    P -->|Denied or over budget| D([Safe rejection / fallback])
+    R -->|Timeout or repeated failure| F([Bounded retry, checkpoint, or human handoff])
+```
 
-![Module 8 — Production Engineering architecture](architecture-diagrams/module-8.svg)
-
-[Open the full-size SVG](architecture-diagrams/module-8.svg).
-
-> Diagram flow: Client request → API/auth → policy and budgets → agent runtime → tool/model gateway; traces → evaluation → monitoring feed back into operations.  
-> This is a conceptual reference architecture. Adapt components and control flow to the system requirements; it is not a mandatory implementation blueprint.
+> This is a conceptual reference architecture. Adapt the components and control flow to the system requirements.
 
 ---
 
