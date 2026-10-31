@@ -8,7 +8,10 @@
 Every topic includes: fundamentals, architecture diagrams, real-world examples, selected research papers, Python implementation with tests, module-wise interview questions, company-style system design questions, explained answers, practical exercises, and a knowledge check.
 
 ## Curriculum
-See [CURRICULUM.md](CURRICULUM.md) for the complete 9-module roadmap.
+See [CURRICULUM.md](CURRICULUM.md) for the complete 9-module roadmap. The full [Module 1 learning guide](MODULE_1_FOUNDATIONS.md) includes concepts, architecture diagrams, sequence diagrams, failure handling, a system design exercise, research papers, and interview answers.
+
+## Implementations
+- [Module 1 Python implementation and tests](implementations/module-1-foundations/README.md)
 
 ## Interview preparation
 - [Module-wise interview question bank](interview-preparation/MODULE_WISE_QUESTIONS.md) — beginner, intermediate, and advanced questions for all 9 modules.
