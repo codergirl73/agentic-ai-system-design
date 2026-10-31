@@ -6,6 +6,157 @@
 
 > Learning principle: understand the mechanics with plain Python before adding an LLM framework.
 
+## Day 1 — Topic 1: What Is an AI Agent?
+
+**Beginner → Intermediate**
+
+By the end of this topic, you should be able to:
+
+1. Define an AI agent from first principles.
+2. Explain how an agent differs from a traditional AI model and chatbot.
+3. Understand and draw the basic architecture of an agent.
+4. Explain how an agent observes, reasons, acts, and evaluates results.
+5. Build a minimal agent in Python.
+6. Answer foundational agent-design interview questions.
+
+### 1. The problem agents solve
+
+Imagine asking an AI system:
+
+> Find three research papers about RAG, compare their approaches, and prepare a summary with references.
+
+A language model can generate text, but it may not know the latest papers or have the ability to search the web, retrieve documents, compare their contents, or save a report.
+
+An agentic system can coordinate those steps:
+
+1. Understand the goal and constraints.
+2. Break the goal into smaller tasks.
+3. Search for relevant papers.
+4. Retrieve and inspect the papers.
+5. Extract useful information.
+6. Compare methods and limitations.
+7. Prepare a report with references.
+8. Check whether the result satisfies the request.
+
+**The key distinction:** the system is not only generating text; it is selecting and carrying out actions to make progress toward a goal.
+
+### 2. What is an AI agent?
+
+An AI agent is a system that receives a goal, observes relevant information, chooses actions, uses tools or interfaces to carry out those actions, and uses the resulting feedback to decide what to do next.
+
+A compact definition:
+
+> An AI agent is a goal-directed system that uses a decision-making mechanism, context, and available actions or tools to interact with an environment and make progress toward a task.
+
+An agent does not have to use an LLM. It can use rules, a learned policy, an LLM, or a combination. What makes it agentic is the action-and-feedback process—not simply the presence of a language model.
+
+### 3. Basic agent architecture — understand the big picture first
+
+Start with this simplified view before learning the detailed production architecture:
+
+\`\`\`mermaid
+flowchart TD
+    U([USER / GOAL<br/>"Research the latest RAG techniques"]) --> A[AI AGENT]
+    A --> R[Reasoning<br/>Understand the request]
+    R --> P[Planning<br/>Break goal into steps]
+    P --> M[Memory / Context<br/>Use relevant task information]
+    M --> T[Tools<br/>Search · APIs · Files · Databases]
+    T --> E([ENVIRONMENT])
+    E --> O[Observe tool results]
+    O --> A
+    A --> F([Final response])
+\`\`\`
+
+Think of the agent as the coordinator. It receives a goal, decides what should happen, asks the tool layer to perform an approved action, and then uses the result to decide the next step.
+
+The environment is the outside world the agent interacts with—for example, websites, APIs, files, databases, or business applications.
+
+This is a conceptual overview. In a real implementation, the model, planner, memory, and orchestrator may be separate services or combined into fewer components.
+
+### 4. The five foundational components
+
+| Component | Responsibility | Example in a research assistant |
+|---|---|---|
+| **Agent / orchestrator** | Coordinates the task and controls execution | Manages the research process |
+| **Model / decision engine** | Interprets context and proposes a response or action | Chooses whether to search or summarize |
+| **Tools** | Provide controlled access to external capabilities | Scholarly search, file reader, database |
+| **Memory / state** | Keeps relevant context and task progress | Stores papers already reviewed |
+| **Planner** | Chooses or organizes the steps needed | Search → retrieve → compare → report |
+
+**Model vs agent:** a model produces an output. An agent is the larger system that uses a decision mechanism, state, tools, and an execution loop to act toward a goal.
+
+#### Tools: how the agent acts
+
+| Tool | Purpose |
+|---|---|
+| Web or scholarly search | Find current information |
+| Python | Run calculations or data processing |
+| Database API | Retrieve stored records |
+| File reader | Read documents |
+| Calculator | Perform arithmetic |
+| Email or business API | Perform an approved external operation |
+
+The model may propose a tool call, but trusted application code must validate the tool name, arguments, permissions, and execution limits before running it. Never execute arbitrary model-generated text as code.
+
+#### Memory and state are related, but different
+
+- **State** is the information needed to continue the current task: current step, results, status, and retry count.
+- **Short-term memory** is recent conversation or task context.
+- **Long-term memory** is information deliberately persisted across tasks, subject to privacy and retention controls.
+
+Memory is not necessarily permanent. Store only what is needed for a clear purpose.
+
+### 5. Agent execution loop — the most important concept
+
+A common agent loop is:
+
+\`\`\`mermaid
+flowchart TD
+    A([1. OBSERVE<br/>Receive goal, context, and results]) --> B[2. REASON<br/>Understand the task and current state]
+    B --> C[3. PLAN<br/>Choose the next useful action]
+    C --> D{4. ACT<br/>Is a tool/action needed?}
+    D -->|Yes| E[Validate tool, arguments, and permissions]
+    E --> F[Execute approved tool]
+    F --> G[5. EVALUATE<br/>Inspect the result]
+    G --> H{Goal complete?}
+    H -->|No, continue| A
+    H -->|Yes| I([6. FINISH<br/>Verify and return response])
+    D -->|No| I
+\`\`\`
+
+The loop in plain language:
+
+1. **Observe:** receive the user's request and relevant environment information.
+2. **Reason:** interpret the task and understand the current state.
+3. **Plan:** choose the next action or steps.
+4. **Act:** call an approved tool or take another permitted action.
+5. **Evaluate:** inspect the result and decide whether it is useful and sufficient.
+6. **Repeat or finish:** continue if more work is needed; otherwise verify and respond.
+
+#### Walkthrough: find recent Graph RAG papers
+
+| Stage | What the agent does |
+|---|---|
+| Observe | Receives the request for recent Graph RAG papers |
+| Reason | Recognizes that current research sources are needed |
+| Plan | Decides to search, filter, retrieve, and compare papers |
+| Act | Calls an approved scholarly-search tool |
+| Evaluate | Checks relevance, dates, and whether enough useful papers were found |
+| Repeat | Refines the search if the results are insufficient |
+| Finish | Produces a summary with source references |
+
+The next action depends on the previous result. If search results are poor, the agent may refine the query. If the results are sufficient, it can move to comparison. This feedback-driven adaptation is central to agentic behavior.
+
+### 6. Basic agent architecture vs execution loop
+
+These two diagrams answer different questions:
+
+- **Architecture:** What components make up the system, and how do they connect?
+- **Execution loop:** In what order does the system observe, decide, act, and use feedback?
+
+Keep both diagrams in mind. In a system-design interview, you should be able to draw the component architecture and then trace one request through its execution loop.
+
+
 ## Architecture diagram
 
 ```mermaid
