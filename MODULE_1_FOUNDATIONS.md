@@ -54,18 +54,18 @@ An agent does not have to use an LLM. It can use rules, a learned policy, an LLM
 
 Start with this simplified view before learning the detailed production architecture:
 
-\`\`\`mermaid
+```mermaid
 flowchart TD
-    U([USER / GOAL<br/>"Research the latest RAG techniques"]) --> A[AI AGENT]
-    A --> R[Reasoning<br/>Understand the request]
-    R --> P[Planning<br/>Break goal into steps]
-    P --> M[Memory / Context<br/>Use relevant task information]
-    M --> T[Tools<br/>Search · APIs · Files · Databases]
-    T --> E([ENVIRONMENT])
-    E --> O[Observe tool results]
+    U(["USER / GOAL<br/>Research the latest RAG techniques"]) --> A["AI AGENT"]
+    A --> R["REASONING<br/>Understand the request"]
+    R --> P["PLANNING<br/>Break the goal into steps"]
+    P --> M["MEMORY / CONTEXT<br/>Use relevant task information"]
+    M --> T["TOOLS<br/>Search · APIs · Files · Databases"]
+    T --> E(["ENVIRONMENT<br/>Websites · APIs · Files · Databases"])
+    E --> O["OBSERVE RESULTS<br/>Inspect returned information"]
     O --> A
-    A --> F([Final response])
-\`\`\`
+    A --> F(["FINAL RESPONSE"])
+```
 
 Think of the agent as the coordinator. It receives a goal, decides what should happen, asks the tool layer to perform an approved action, and then uses the result to decide the next step.
 
@@ -110,19 +110,19 @@ Memory is not necessarily permanent. Store only what is needed for a clear purpo
 
 A common agent loop is:
 
-\`\`\`mermaid
+```mermaid
 flowchart TD
-    A([1. OBSERVE<br/>Receive goal, context, and results]) --> B[2. REASON<br/>Understand the task and current state]
-    B --> C[3. PLAN<br/>Choose the next useful action]
-    C --> D{4. ACT<br/>Is a tool/action needed?}
-    D -->|Yes| E[Validate tool, arguments, and permissions]
-    E --> F[Execute approved tool]
-    F --> G[5. EVALUATE<br/>Inspect the result]
-    G --> H{Goal complete?}
-    H -->|No, continue| A
-    H -->|Yes| I([6. FINISH<br/>Verify and return response])
-    D -->|No| I
-\`\`\`
+    A(["1 · OBSERVE<br/>Receive goal, context, and results"]) --> B["2 · REASON<br/>Understand the task and current state"]
+    B --> C["3 · PLAN<br/>Choose the next useful action"]
+    C --> D{"4 · ACT<br/>Is a tool or action needed?"}
+    D -->|Yes| E["Validate tool, arguments, and permissions"]
+    E --> F["Execute the approved tool"]
+    F --> G["5 · EVALUATE<br/>Inspect the result"]
+    G --> H{"Is the goal complete?"}
+    H -->|No · continue loop| A
+    H -->|Yes| I(["6 · FINISH<br/>Verify and return the response"])
+    D -->|No tool needed| I
+```
 
 The loop in plain language:
 
