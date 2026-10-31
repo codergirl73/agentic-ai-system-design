@@ -6,14 +6,21 @@
 
 ## Architecture diagram
 
-A document ingestion pipeline converts unstructured files into clean, chunked, indexed representations.
+```mermaid
+flowchart TD
+    A([Documents and data sources]) --> B[Load files]
+    B --> C[Parse text and structure]
+    C --> D[Clean and normalize]
+    D --> E[Split into chunks]
+    E --> F[Attach metadata and provenance]
+    F --> G[Embedding model]
+    G --> H[(Vector index)]
+    H --> I[Validate index: counts, samples, metadata]
+    I --> J([Search-ready corpus])
+    C -->|Parsing errors| X[Quarantine / report failed documents]
+```
 
-![Module 3 — Document Processing and Embeddings architecture](architecture-diagrams/module-3.svg)
-
-[Open the full-size SVG](architecture-diagrams/module-3.svg).
-
-> Diagram flow: Source files → parsing → cleaning → chunking + metadata → embedding model → vector index → validation.  
-> This is a conceptual reference architecture. Adapt components and control flow to the system requirements; it is not a mandatory implementation blueprint.
+> This is a conceptual reference architecture. Adapt the components and control flow to the system requirements.
 
 ---
 
