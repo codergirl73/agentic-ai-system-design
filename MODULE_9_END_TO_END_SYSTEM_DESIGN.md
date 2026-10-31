@@ -6,14 +6,24 @@
 
 ## Architecture diagram
 
-An end-to-end design connects requirements, APIs, orchestration, retrieval/tools, model context, evaluation, and deployment.
+```mermaid
+flowchart TD
+    A([Problem and users]) --> B[Requirements and constraints]
+    B --> C[API and data contracts]
+    C --> D[Architecture and orchestration]
+    D --> E[Retrieval and tool integrations]
+    D --> F[Model and context strategy]
+    E --> G[End-to-end workflow]
+    F --> G
+    G --> H[Evaluation and safety checks]
+    H --> I{Meets quality, latency, and cost targets?}
+    I -->|No| J[Analyze bottleneck and revise design]
+    J --> D
+    I -->|Yes| K[Deploy with observability]
+    K --> L([Operate, monitor, and improve])
+```
 
-![Module 9 — End-to-End Agentic System Design architecture](architecture-diagrams/module-9.svg)
-
-[Open the full-size SVG](architecture-diagrams/module-9.svg).
-
-> Diagram flow: Requirements → API/data design → orchestration → retrieval/tools + model/context → evaluation → deployment and observability.  
-> This is a conceptual reference architecture. Adapt components and control flow to the system requirements; it is not a mandatory implementation blueprint.
+> This is a conceptual reference architecture. Adapt the components and control flow to the system requirements.
 
 ---
 
