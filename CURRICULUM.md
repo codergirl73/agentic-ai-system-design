@@ -112,34 +112,14 @@
 6. Design reviews: requirements, architecture, APIs, data flow, failure modes, and trade-offs
 **Implementation milestone:** Complete an end-to-end project with architecture documentation, evaluation report, tests, and demo.
 
-## Cross-module system design interview track
+## Separate company-practices library
 
-Practice representative system design prompts inspired by engineering problem areas at major technology and AI companies. These are practice prompts, not verified or attributed interview questions.
+Company-specific engineering case studies and system-design practice are maintained independently from the nine learning modules:
 
-- **Google-style:** research agents, production incident investigation, real-time assistants, tool reliability.
-- **Meta-style:** content understanding, recommendation agents, large-scale evaluation, high-throughput systems.
-- **Amazon-style:** customer-support agents, order workflows, authorization, reliable service integration.
-- **Microsoft-style:** enterprise RAG, permission-aware retrieval, multi-agent collaboration, conversational analytics.
-- **OpenAI-style:** deep research agents, long-running tool workflows, context management, agent evaluation.
-- **Anthropic-style:** coding agents, safe tool use, inference services, reliability and security boundaries.
-- **NVIDIA-style:** distributed inference, GPU scheduling, embedding services, model routing.
+- [Company Engineering Practices](COMPANY_PRACTICES.md) — public engineering articles, architecture patterns, original exercises, and a reusable case-study template for Anthropic, OpenAI, Google, Microsoft, AWS, and NVIDIA.
+- [Company-Style System Design Interview Practice](SYSTEM_DESIGN_INTERVIEWS.md) — representative practice prompts, clearly labeled as original exercises rather than verified interview questions.
 
-### Required system design answer structure
-1. Clarify functional and non-functional requirements.
-2. Estimate scale, latency, throughput, and cost where relevant.
-3. Draw the high-level architecture.
-4. Explain APIs, data models, storage, and component responsibilities.
-5. Walk through an end-to-end request.
-6. Discuss failures, retries, idempotency, and recovery.
-7. Address security, privacy, and authorization.
-8. Explain evaluation, observability, scaling, and trade-offs.
-
-### Difficulty progression
-- **Foundations:** components, request flow, tools, and basic architecture.
-- **Intermediate:** retrieval, memory, orchestration, caching, reliability, and access control.
-- **Advanced:** distributed systems, multi-agent coordination, inference optimization, evaluation, and production safety.
-
-Each module should include at least one system design exercise, a sample architecture, interviewer follow-ups, and a trade-off discussion.
+Use these resources alongside the curriculum when you want to apply module concepts to company-inspired scenarios. They are not additional curriculum modules.
 
 ## Topic completion standard
 A topic is complete when you can explain it from first principles, draw its architecture, implement and test its core idea, answer interview questions, discuss limitations and trade-offs, and identify relevant research when meaningful.
