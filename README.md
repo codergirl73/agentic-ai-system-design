@@ -5,7 +5,7 @@
 > Learn the fundamentals. Build the systems. Understand the trade-offs.
 
 ## Learning method
-Every topic includes: fundamentals, architecture diagrams, real-world examples, selected research papers, Python implementation with tests, module-wise interview questions, company-style system design questions, explained answers, practical exercises, and a knowledge check.
+Every topic includes: fundamentals, Mermaid architecture diagrams, real-world examples, selected research papers, Python implementation with tests, module-wise interview questions, company-style system design questions, explained answers, practical exercises, and a knowledge check.
 
 ## Curriculum
 See [CURRICULUM.md](CURRICULUM.md) for the complete 9-module roadmap. The full [Module 1 learning guide](MODULE_1_FOUNDATIONS.md) includes concepts, architecture diagrams, sequence diagrams, failure handling, a system design exercise, research papers, and interview answers.
@@ -25,6 +25,7 @@ Follow the learning journey and AI research explainers on Instagram: **[@frontie
 
 ## Repository layout
 - `CURRICULUM.md` — modules and topics
+- `MODULE_1_FOUNDATIONS.md` through `MODULE_9_*.md` — module guides with embedded Mermaid diagrams
 - `SYSTEM_DESIGN_INTERVIEWS.md` — company-wise system design practice
 - `interview-preparation/MODULE_WISE_QUESTIONS.md` — interview questions organized by module
 - `PROGRESS.md` — learning tracker
