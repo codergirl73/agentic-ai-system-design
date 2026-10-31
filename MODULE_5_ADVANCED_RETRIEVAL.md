@@ -6,14 +6,21 @@
 
 ## Architecture diagram
 
-Advanced retrieval improves candidate coverage and ranking through query transformation, fusion, and reranking.
+```mermaid
+flowchart TD
+    Q([User query]) --> A[Rewrite / decompose query]
+    A --> B[Generate multiple queries]
+    A --> H[Optional HyDE representation]
+    B --> R[Retrieve candidates]
+    H --> R
+    R --> F[Merge rankings with RRF or score fusion]
+    F --> X[Cross-encoder reranking]
+    X --> K[Select top-K passages]
+    K --> C([Context for generation])
+    X --> M[Measure relevance and latency]
+```
 
-![Module 5 — Advanced Retrieval architecture](architecture-diagrams/module-5.svg)
-
-[Open the full-size SVG](architecture-diagrams/module-5.svg).
-
-> Diagram flow: User query → rewrite/decompose → multi-query or HyDE → candidate retrieval → rank fusion → cross-encoder reranking → top-K context.  
-> This is a conceptual reference architecture. Adapt components and control flow to the system requirements; it is not a mandatory implementation blueprint.
+> This is a conceptual reference architecture. Adapt the components and control flow to the system requirements.
 
 ---
 
