@@ -6,14 +6,20 @@
 
 ## Architecture diagram
 
-A retrieval-augmented generation pipeline grounds model responses in retrieved evidence.
+```mermaid
+flowchart TD
+    Q([User question]) --> N[Normalize and process query]
+    N --> E[Create query embedding]
+    E --> R[Retrieve relevant chunks]
+    R --> F[Filter and rank candidates]
+    F --> C[Assemble context with source metadata]
+    C --> G[LLM generates grounded answer]
+    G --> V[Check answer against evidence]
+    V --> A([Answer with citations])
+    V -->|Insufficient evidence| U([State uncertainty or retrieve more])
+```
 
-![Module 2 — RAG Fundamentals architecture](architecture-diagrams/module-2.svg)
-
-[Open the full-size SVG](architecture-diagrams/module-2.svg).
-
-> Diagram flow: User question → query processing → retriever → relevant passages → context assembly → LLM → answer with citations.  
-> This is a conceptual reference architecture. Adapt components and control flow to the system requirements; it is not a mandatory implementation blueprint.
+> This is a conceptual reference architecture. Adapt the components and control flow to the system requirements.
 
 ---
 
