@@ -100,6 +100,12 @@ Design an agent that can answer questions and initiate a limited set of support 
 **Practice exercise — Agent inference platform**
 Design an inference platform serving multiple agent workloads with different latency and throughput needs. Discuss model routing, batching, queueing, GPU utilization, isolation, autoscaling, and cost attribution. Validate choices with measurements rather than assumptions.
 
+## Hands-on implementation case studies
+
+Runnable exercises are maintained separately under [`company-practices/`](company-practices/README.md). Each includes source analysis, Mermaid architecture, component responsibilities, Python implementation, unit tests, an evaluation plan, and design trade-offs.
+
+- [Open the hands-on case-study index](company-practices/README.md)
+
 ## Cross-company architecture patterns to compare
 
 | Design question | Patterns to investigate |
