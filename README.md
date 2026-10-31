@@ -13,8 +13,10 @@ See [CURRICULUM.md](CURRICULUM.md) for the complete 9-module roadmap. The full [
 ## Implementations
 - [Module 1 Python implementation and tests](implementations/module-1-foundations/README.md)
 
-## Company engineering practices
-- [Company Engineering Practices for Agentic AI](COMPANY_PRACTICES.md) — a central library of public architecture patterns, primary sources, original practice exercises, and a reusable case-study template for Anthropic, OpenAI, Google, Microsoft, AWS, and NVIDIA.
+## Separate company-practices library
+This is an independent case-study and practice track, separate from the nine-module learning curriculum.
+- [Company Engineering Practices](COMPANY_PRACTICES.md) — public engineering patterns, primary sources, and reusable case-study templates.
+- [Company-Style System Design Interview Practice](SYSTEM_DESIGN_INTERVIEWS.md) — original company-inspired design prompts, not verified interview questions.
 
 ## Interview preparation
 - [Module-wise interview question bank](interview-preparation/MODULE_WISE_QUESTIONS.md) — beginner, intermediate, and advanced questions for all 9 modules.
@@ -26,7 +28,8 @@ Follow the learning journey and AI research explainers on Instagram: **[@frontie
 ## Repository layout
 - `CURRICULUM.md` — modules and topics
 - `MODULE_1_FOUNDATIONS.md` through `MODULE_9_*.md` — module guides with embedded Mermaid diagrams
-- `SYSTEM_DESIGN_INTERVIEWS.md` — company-wise system design practice
+- `COMPANY_PRACTICES.md` — independent company engineering case-study library
+- `SYSTEM_DESIGN_INTERVIEWS.md` — company-inspired system design practice prompts
 - `interview-preparation/MODULE_WISE_QUESTIONS.md` — interview questions organized by module
 - `PROGRESS.md` — learning tracker
 - `research-papers/` — paper links and reading notes
