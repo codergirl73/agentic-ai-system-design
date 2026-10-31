@@ -102,6 +102,8 @@
 **Implementation milestone:** Add tests, traces, metrics, bounded retries, security checks, and deployment documentation.
 
 ## Module 9 — End-to-End System Design Projects
+
+**Module guide and embedded Mermaid architecture:** [MODULE_9_END_TO_END_SYSTEM_DESIGN.md](MODULE_9_END_TO_END_SYSTEM_DESIGN.md)
 1. Enterprise knowledge assistant
 2. Research assistant with source verification
 3. Customer-support agent
