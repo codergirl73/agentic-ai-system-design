@@ -6,6 +6,16 @@
 
 > Learning principle: understand the mechanics with plain Python before adding an LLM framework.
 
+## Architecture diagram
+
+The diagram below is the module's visual reference architecture. It shows the trusted orchestration boundary: model decisions are validated and authorized before tools execute.
+
+![Module 1 — Foundations of Agentic AI architecture](architecture-diagrams/module-1.svg)
+
+[Open the full-size SVG](architecture-diagrams/module-1.svg).
+
+---
+
 ## Learning outcomes
 
 By the end of this module, you should be able to:
