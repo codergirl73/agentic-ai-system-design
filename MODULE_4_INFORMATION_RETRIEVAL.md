@@ -6,14 +6,21 @@
 
 ## Architecture diagram
 
-A retrieval system combines lexical and semantic methods to find relevant candidates and measures ranking quality.
+```mermaid
+flowchart TD
+    Q([User query]) --> P[Query preprocessing]
+    P --> B[Lexical retrieval: BM25]
+    P --> D[Dense retrieval: vector similarity]
+    B --> F[Candidate fusion]
+    D --> F
+    F --> R[Ranked candidate list]
+    R --> K[Top-K results]
+    K --> E[Evaluate relevance: Recall@K, MRR, NDCG]
+    E --> O([Relevant evidence])
+    E -->|Poor retrieval| T[Tune analyzers, embeddings, filters, or K]
+```
 
-![Module 4 — Information Retrieval architecture](architecture-diagrams/module-4.svg)
-
-[Open the full-size SVG](architecture-diagrams/module-4.svg).
-
-> Diagram flow: User query → query processing → BM25 and dense retrieval → fusion → ranked results → retrieval evaluation.  
-> This is a conceptual reference architecture. Adapt components and control flow to the system requirements; it is not a mandatory implementation blueprint.
+> This is a conceptual reference architecture. Adapt the components and control flow to the system requirements.
 
 ---
 
