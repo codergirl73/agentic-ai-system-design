@@ -13,6 +13,9 @@ See [CURRICULUM.md](CURRICULUM.md) for the complete 9-module roadmap. The full [
 ## Implementations
 - [Module 1 Python implementation and tests](implementations/module-1-foundations/README.md)
 
+## Company engineering practices
+- [Company Engineering Practices for Agentic AI](COMPANY_PRACTICES.md) — a central library of public architecture patterns, primary sources, original practice exercises, and a reusable case-study template for Anthropic, OpenAI, Google, Microsoft, AWS, and NVIDIA.
+
 ## Interview preparation
 - [Module-wise interview question bank](interview-preparation/MODULE_WISE_QUESTIONS.md) — beginner, intermediate, and advanced questions for all 9 modules.
 - [Company-style system design practice](SYSTEM_DESIGN_INTERVIEWS.md) — representative prompts inspired by engineering problem areas at Google, Meta, Amazon, Microsoft, OpenAI, Anthropic, and NVIDIA. These are practice prompts, not claims about exact questions asked in company interviews.
