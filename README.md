@@ -10,6 +10,21 @@ Every topic includes: fundamentals, Mermaid architecture diagrams, real-world ex
 ## Curriculum
 See [CURRICULUM.md](CURRICULUM.md) for the complete 9-module roadmap. The full [Module 1 learning guide](MODULE_1_FOUNDATIONS.md) includes concepts, architecture diagrams, sequence diagrams, failure handling, a system design exercise, research papers, and interview answers.
 
+
+## Nine-module learning curriculum
+
+The repository has a guide page for each module. **Module 1 is currently the only full-length chapter; Modules 2–9 currently contain their architecture diagrams, topic outlines, and implementation milestones and are awaiting full chapter development.**
+
+1. [Module 1 — Foundations of Agentic AI](MODULE_1_FOUNDATIONS.md) — full learning guide
+2. [Module 2 — RAG Fundamentals](MODULE_2_RAG_FUNDAMENTALS.md)
+3. [Module 3 — Document Processing and Embeddings](MODULE_3_DOCUMENT_PROCESSING.md)
+4. [Module 4 — Information Retrieval](MODULE_4_INFORMATION_RETRIEVAL.md)
+5. [Module 5 — Advanced Retrieval](MODULE_5_ADVANCED_RETRIEVAL.md)
+6. [Module 6 — Advanced RAG](MODULE_6_ADVANCED_RAG.md)
+7. [Module 7 — Agent Architecture and Orchestration](MODULE_7_AGENT_ARCHITECTURE.md)
+8. [Module 8 — Production Engineering](MODULE_8_PRODUCTION_ENGINEERING.md)
+9. [Module 9 — End-to-End System Design](MODULE_9_END_TO_END_SYSTEM_DESIGN.md)
+
 ## Implementations
 - [Module 1 Python implementation and tests](implementations/module-1-foundations/README.md)
 
