@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#07111f">
+<title>Learning guide · Agentic Systems</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script>
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:false,theme:'dark',securityLevel:'strict',flowchart:{curve:'basis',htmlLabels:true},themeVariables:{darkMode:true,background:'#0b1728',primaryColor:'#102b42',primaryTextColor:'#eaf5ff',primaryBorderColor:'#20c9e8',lineColor:'#36b9d5',fontFamily:'DM Sans'}});
+window.renderMermaid = async () => { const nodes = document.querySelectorAll('pre code.language-mermaid'); for (const node of nodes) { const pre=node.parentElement; const div=document.createElement('div'); div.className='mermaid'; div.textContent=node.textContent; pre.replaceWith(div); } await mermaid.run({querySelector:'.mermaid'}); };
+</script>
+<style>
+:root{--bg:#07111f;--panel:#0c1b2d;--line:#1c3850;--text:#eaf3fb;--muted:#9bb0c4;--cyan:#38d7ee;--max:1100px}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% 0%,rgba(28,115,151,.16),transparent 34%),var(--bg);color:var(--text);font:16px/1.7 'DM Sans',sans-serif}.wrap{width:min(var(--max),calc(100% - 40px));margin:auto}a{color:var(--cyan);text-decoration:none}.top{position:sticky;top:0;background:rgba(7,17,31,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);z-index:5}.topin{height:68px;display:flex;justify-content:space-between;align-items:center}.brand{font:700 1rem 'Space Grotesk';color:var(--text)}.brand b{color:var(--cyan)}.back{border:1px solid var(--line);padding:8px 13px;border-radius:8px;color:var(--text);font-size:.85rem}.layout{display:grid;grid-template-columns:230px minmax(0,1fr);gap:38px;padding:38px 0 90px}.side{position:sticky;top:94px;align-self:start}.eyebrow{font: .72rem 'DM Mono';letter-spacing:.1em;color:var(--cyan);text-transform:uppercase;margin-bottom:13px}.side a{display:block;color:var(--muted);padding:7px 10px;border-radius:7px;font-size:.88rem}.side a:hover,.side a.selected{background:#10243a;color:var(--cyan)}.content{min-width:0;background:linear-gradient(145deg,rgba(12,27,45,.94),rgba(8,22,38,.94));border:1px solid var(--line);border-radius:16px;padding:clamp(22px,4vw,48px)}.content h1,.content h2,.content h3,.content h4{font-family:'Space Grotesk';line-height:1.2;letter-spacing:-.03em}.content h1{font-size:clamp(2rem,5vw,3.2rem);margin:.1em 0 .55em}.content h2{font-size:1.7rem;margin:2em 0 .7em;border-bottom:1px solid var(--line);padding-bottom:10px}.content h3{font-size:1.25rem;margin:1.6em 0 .55em}.content p,.content li{color:#c2d1de}.content strong{color:#f4f9ff}.content blockquote{border-left:3px solid var(--cyan);padding:8px 18px;margin:20px 0;background:#0b2032;color:var(--muted)}.content code{font-family:'DM Mono';font-size:.86em;background:#14283b;padding:2px 5px;border-radius:5px}.content pre{overflow:auto;background:#081522;border:1px solid var(--line);padding:17px;border-radius:10px}.content pre code{background:none;padding:0}.content table{display:block;overflow-x:auto;border-collapse:collapse;width:100%}.content th,.content td{border:1px solid var(--line);padding:10px 12px;text-align:left}.content th{background:#12283d;color:var(--cyan)}.content img{max-width:100%}.content hr{border:0;border-top:1px solid var(--line);margin:30px 0}.content input{accent-color:var(--cyan)}.mermaid{overflow:auto;background:#081522;border:1px solid var(--line);padding:18px;border-radius:10px;margin:20px 0}.loading,.error{color:var(--muted);padding:25px 0}.error{color:#ffb7a8}.source{display:inline-block;margin-top:25px;font-size:.82rem;color:var(--muted)}@media(max-width:760px){.layout{grid-template-columns:1fr;gap:16px;padding-top:20px}.side{position:static;display:flex;overflow:auto;gap:4px;padding-bottom:5px}.side .eyebrow{display:none}.side a{white-space:nowrap}.content{padding:23px 18px}.wrap{width:min(100% - 28px,var(--max))}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap topin"><a class="brand" href="./index.html">AGENTIC<b>.SYSTEMS</b></a><a class="back" href="./index.html#curriculum">← Back to curriculum</a></div></header>
+<div class="wrap layout">
+<aside class="side"><div class="eyebrow">Curriculum</div><a href="?module=1" data-module="1">01 · Foundations</a><a href="?module=2" data-module="2">02 · RAG fundamentals</a><a href="?module=3" data-module="3">03 · Documents & embeddings</a><a href="?module=4" data-module="4">04 · Information retrieval</a><a href="?module=5" data-module="5">05 · Advanced retrieval</a><a href="?module=6" data-module="6">06 · Advanced RAG</a><a href="?module=7" data-module="7">07 · Agent architecture</a><a href="?module=8" data-module="8">08 · Production engineering</a><a href="?module=9" data-module="9">09 · End-to-end design</a></aside>
+<main class="content" id="article"><div class="loading">Loading your learning guide…</div></main>
+</div>
+<script>
+const modules={
+"1":{file:"MODULE_1_FOUNDATIONS.md",title:"Module 1 — Foundations of Agentic AI"},
+"2":{file:"MODULE_2_RAG_FUNDAMENTALS.md",title:"Module 2 — RAG Fundamentals"},
+"3":{file:"MODULE_3_DOCUMENT_PROCESSING.md",title:"Module 3 — Document Processing & Embeddings"},
+"4":{file:"MODULE_4_INFORMATION_RETRIEVAL.md",title:"Module 4 — Information Retrieval"},
+"5":{file:"MODULE_5_ADVANCED_RETRIEVAL.md",title:"Module 5 — Advanced Retrieval"},
+"6":{file:"MODULE_6_ADVANCED_RAG.md",title:"Module 6 — Advanced RAG"},
+"7":{file:"MODULE_7_AGENT_ARCHITECTURE.md",title:"Module 7 — Agent Architecture & Orchestration"},
+"8":{file:"MODULE_8_PRODUCTION_ENGINEERING.md",title:"Module 8 — Production Engineering"},
+"9":{file:"MODULE_9_END_TO_END_SYSTEM_DESIGN.md",title:"Module 9 — End-to-End System Design"},
+"interviews":{file:"SYSTEM_DESIGN_INTERVIEWS.md",title:"System Design Interview Preparation"}
+};
+(async()=>{
+ const key=new URLSearchParams(location.search).get('module')||'1', item=modules[key]||modules["1"];
+ document.querySelectorAll('[data-module]').forEach(a=>a.classList.toggle('selected',a.dataset.module===key));
+ const article=document.getElementById('article');
+ try{
+  const response=await fetch('https://raw.githubusercontent.com/codergirl73/agentic-ai-system-design/master/'+item.file);
+  if(!response.ok) throw new Error('This guide is not available yet. Please check back as the curriculum is expanded.');
+  const markdown=await response.text();
+  marked.setOptions({gfm:true,breaks:false});
+  article.innerHTML=DOMPurify.sanitize(marked.parse(markdown));
+  await window.renderMermaid?.();
+  const source=document.createElement('a');source.className='source';source.href='https://github.com/codergirl73/agentic-ai-system-design/blob/master/'+item.file;source.textContent='View source on GitHub ↗';source.target='_blank';source.rel='noopener noreferrer';article.append(source);
+  document.title=item.title+' · Agentic Systems';
+ }catch(error){article.innerHTML='<div class="error">'+error.message+'</div><p><a href="./index.html#curriculum">Return to the curriculum</a></p>';}
+})();
+</script>
+</body></html>
