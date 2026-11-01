@@ -56,13 +56,13 @@ Start with this simplified view before learning the detailed production architec
 
 ```mermaid
 flowchart TD
-    U(["USER / GOAL<br/>Research the latest RAG techniques"]) --> A["AI AGENT"]
-    A --> R["REASONING<br/>Understand the request"]
-    R --> P["PLANNING<br/>Break the goal into steps"]
-    P --> M["MEMORY / CONTEXT<br/>Use relevant task information"]
-    M --> T["TOOLS<br/>Search · APIs · Files · Databases"]
-    T --> E(["ENVIRONMENT<br/>Websites · APIs · Files · Databases"])
-    E --> O["OBSERVE RESULTS<br/>Inspect returned information"]
+    U(["USER GOAL: Research current RAG techniques"]) --> A["AI AGENT"]
+    A --> R["REASON: Understand the request"]
+    R --> P["PLAN: Break goal into steps"]
+    P --> M["CONTEXT: Use relevant task information"]
+    M --> T["TOOLS: Search, APIs, files, databases"]
+    T --> E(["ENVIRONMENT: Websites, APIs, files"])
+    E --> O["OBSERVE: Inspect returned information"]
     O --> A
     A --> F(["FINAL RESPONSE"])
 ```
