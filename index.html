@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#07111f">
+<meta name="description" content="A practical, project-based curriculum for learning Agentic AI system design, RAG, retrieval, orchestration, and production engineering.">
+<title>Agentic AI Systems — Learn. Design. Build.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark',securityLevel:'strict',flowchart:{curve:'basis',htmlLabels:true},themeVariables:{darkMode:true,background:'#0b1728',primaryColor:'#102b42',primaryTextColor:'#eaf5ff',primaryBorderColor:'#20c9e8',lineColor:'#36b9d5',secondaryColor:'#11243a',tertiaryColor:'#0d1d30',fontFamily:'DM Sans'}});
+</script>
+<style>
+:root{--bg:#07111f;--panel:#0c1b2d;--panel2:#10243a;--line:#1c3850;--text:#eaf3fb;--muted:#9bb0c4;--cyan:#38d7ee;--blue:#6d9cff;--green:#7be0bd;--max:1160px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 78% 0%,rgba(28,115,151,.18),transparent 34%),var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6}a{color:inherit;text-decoration:none}.wrap{width:min(var(--max),calc(100% - 48px));margin:auto}.mono{font-family:'DM Mono',monospace;letter-spacing:.08em;text-transform:uppercase;font-size:.72rem;color:var(--cyan)}.nav{height:76px;border-bottom:1px solid rgba(140,185,214,.13);display:flex;align-items:center;position:sticky;top:0;background:rgba(7,17,31,.86);backdrop-filter:blur(18px);z-index:10}.navin{display:flex;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:12px;font-family:'Space Grotesk';font-weight:700;letter-spacing:-.03em}.mark{width:34px;height:34px;border:1px solid rgba(56,215,238,.6);border-radius:10px;display:grid;place-items:center;color:var(--cyan);font-size:18px;background:linear-gradient(145deg,rgba(56,215,238,.16),rgba(109,156,255,.08))}.navlinks{display:flex;gap:27px;color:var(--muted);font-size:.9rem}.navlinks a:hover,.textlink:hover{color:var(--cyan)}.navcta,.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:11px 17px;border-radius:9px;font-weight:700;font-size:.88rem;border:1px solid var(--line);transition:.2s}.navcta,.btn.primary{background:var(--cyan);color:#04121d;border-color:var(--cyan)}.navcta:hover,.btn.primary:hover{background:#8aeeff;transform:translateY(-2px)}.btn.secondary{background:rgba(255,255,255,.025);color:var(--text)}.btn.secondary:hover{border-color:var(--cyan);color:var(--cyan)}.hero{padding:104px 0 76px;position:relative;overflow:hidden}.hero:after{content:"";position:absolute;width:460px;height:460px;border:1px solid rgba(56,215,238,.12);border-radius:50%;right:-160px;top:30px;box-shadow:0 0 0 55px rgba(56,215,238,.025),0 0 0 110px rgba(56,215,238,.018);pointer-events:none}.eyebrow{display:inline-flex;gap:10px;align-items:center;padding:7px 11px;border:1px solid rgba(56,215,238,.25);border-radius:99px;background:rgba(56,215,238,.06);color:#b6f5ff;font-size:.78rem}.dot{width:7px;height:7px;background:var(--green);border-radius:50%;box-shadow:0 0 12px var(--green)}h1,h2,h3{font-family:'Space Grotesk',sans-serif;line-height:1.12;letter-spacing:-.045em}h1{font-size:clamp(3rem,7vw,5.7rem);max-width:850px;margin:25px 0 22px}h1 span{background:linear-gradient(90deg,var(--cyan),#9bbcff 78%);-webkit-background-clip:text;background-clip:text;color:transparent}.hero p{max-width:650px;color:var(--muted);font-size:1.12rem;margin:0 0 30px}.actions{display:flex;gap:12px;flex-wrap:wrap}.hero-meta{display:flex;gap:28px;flex-wrap:wrap;margin-top:58px;color:var(--muted);font-size:.83rem}.hero-meta strong{color:var(--text);font-family:'Space Grotesk';font-size:1.15rem;display:block}.section{padding:76px 0}.sectionhead{display:flex;justify-content:space-between;align-items:end;gap:25px;margin-bottom:30px}.sectionhead h2{font-size:clamp(2rem,4vw,3rem);margin:9px 0 0}.sectionhead p{color:var(--muted);max-width:440px;margin:0}.feature{display:grid;grid-template-columns:1.05fr .95fr;gap:22px}.featurecopy,.diagramcard,.module,.pathcard,.resource{background:linear-gradient(145deg,rgba(16,36,58,.96),rgba(10,25,42,.96));border:1px solid var(--line);border-radius:16px}.featurecopy{padding:34px}.featurecopy h3{font-size:2rem;margin:14px 0}.featurecopy p{color:var(--muted)}.tagrow{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0}.tag{border:1px solid #25445c;background:#0a1a2b;color:#b7cbdc;padding:5px 9px;border-radius:6px;font-size:.75rem}.diagramcard{padding:22px;min-width:0}.diagramtop{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.diagramtop span:last-child{font-size:.75rem;color:var(--muted)}.mermaid{background:#0b1728;border:1px solid rgba(56,215,238,.12);border-radius:12px;padding:16px;overflow:auto}.modulegrid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.module{padding:23px;display:flex;flex-direction:column;min-height:222px;transition:.2s}.module:hover{transform:translateY(-4px);border-color:rgba(56,215,238,.65);background:linear-gradient(145deg,#102a40,#0d2035)}.module.active{border-color:rgba(56,215,238,.7);box-shadow:inset 0 0 0 1px rgba(56,215,238,.12)}.moduletop{display:flex;justify-content:space-between;align-items:center}.num{font-family:'DM Mono';color:var(--cyan);font-size:.78rem}.status{font-size:.68rem;border:1px solid #28516a;border-radius:99px;padding:4px 8px;color:#a7c8db}.status.current{color:var(--green);border-color:rgba(123,224,189,.35);background:rgba(123,224,189,.07)}.module h3{font-size:1.25rem;margin:20px 0 9px}.module p{color:var(--muted);font-size:.88rem;margin:0 0 18px}.modulefoot{margin-top:auto;color:var(--cyan);font-size:.82rem;font-weight:700}.path{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}.pathcard{padding:20px}.pathcard .step{font-family:'DM Mono';font-size:.72rem;color:var(--cyan)}.pathcard h3{font-size:1.05rem;margin:10px 0 7px}.pathcard p{font-size:.84rem;color:var(--muted);margin:0}.resources{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.resource{padding:23px}.resource .icon{font-size:1.35rem;color:var(--cyan)}.resource h3{font-size:1.1rem;margin:12px 0 6px}.resource p{color:var(--muted);font-size:.88rem;margin:0 0 15px}.textlink{color:var(--cyan);font-size:.84rem;font-weight:700}.callout{border:1px solid rgba(56,215,238,.22);border-radius:16px;padding:30px;background:linear-gradient(110deg,rgba(56,215,238,.09),rgba(109,156,255,.06));display:flex;align-items:center;justify-content:space-between;gap:20px}.callout h2{font-size:1.65rem;margin:0 0 7px}.callout p{color:var(--muted);margin:0}.footer{border-top:1px solid rgba(140,185,214,.13);padding:28px 0;color:var(--muted);font-size:.82rem}.footerin{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.mobilemenu{display:none}
+@media(max-width:850px){.navlinks{display:none}.feature{grid-template-columns:1fr}.modulegrid{grid-template-columns:repeat(2,1fr)}.path{grid-template-columns:repeat(2,1fr)}.resources{grid-template-columns:1fr 1fr}.hero{padding-top:78px}}
+@media(max-width:560px){.wrap{width:min(100% - 32px,var(--max))}.navcta{padding:9px 11px;font-size:.78rem}.hero{padding:66px 0 54px}h1{font-size:3.15rem}.hero-meta{gap:18px;margin-top:40px}.section{padding:55px 0}.sectionhead{display:block}.sectionhead p{margin-top:12px}.modulegrid,.path,.resources{grid-template-columns:1fr}.module{min-height:190px}.featurecopy{padding:24px}.diagramcard{padding:14px}.callout{display:block}.callout .btn{margin-top:18px}}
+</style>
+</head>
+<body>
+<header class="nav"><div class="wrap navin">
+<a class="brand" href="#"><span class="mark">∿</span><span>AGENTIC<span style="color:var(--cyan)">.SYSTEMS</span></span></a>
+<nav class="navlinks"><a href="#curriculum">Curriculum</a><a href="#learning-path">Learning path</a><a href="#resources">Resources</a></nav>
+<a class="navcta" href="https://github.com/codergirl73/agentic-ai-system-design">View on GitHub ↗</a>
+</div></header>
+<main>
+<section class="hero"><div class="wrap">
+<div class="eyebrow"><span class="dot"></span> OPEN LEARNING CURRICULUM · BEGINNER TO ADVANCED</div>
+<h1>Understand agents.<br><span>Design systems.</span><br>Build what matters.</h1>
+<p>A hands-on path through Agentic AI system design—from the foundations of agents and RAG to retrieval, orchestration, production engineering, and end-to-end architecture.</p>
+<div class="actions"><a class="btn primary" href="#curriculum">Explore the curriculum <span>→</span></a><a class="btn secondary" href="https://github.com/codergirl73/agentic-ai-system-design">Explore the repository ↗</a></div>
+<div class="hero-meta"><div><strong>09</strong> learning modules</div><div><strong>Build-first</strong> practical approach</div><div><strong>Python + Mermaid</strong> implementation & architecture</div></div>
+</div></section>
+<section class="section" id="featured"><div class="wrap">
+<div class="sectionhead"><div><div class="mono">START HERE · MODULE 01</div><h2>Build your foundation.</h2></div><p>Learn what an agent is, how its architecture fits together, and how the execution loop turns a goal into a sequence of actions.</p></div>
+<div class="feature">
+<div class="featurecopy"><div class="mono">01 / FOUNDATIONS OF AGENTIC AI</div><h3>From a language model to a working agent.</h3><p>Start with first principles. Understand the model, tools, planner, memory, state, and orchestrator. Then trace an agent through observe, reason, plan, act, and evaluate.</p>
+<div class="tagrow"><span class="tag">Agent architecture</span><span class="tag">Execution loop</span><span class="tag">Tools & memory</span><span class="tag">Python</span><span class="tag">Interview prep</span></div>
+<a class="btn primary" href="https://github.com/codergirl73/agentic-ai-system-design/blob/master/MODULE_1_FOUNDATIONS.md">Open Module 1 guide →</a>
+</div>
+<div class="diagramcard"><div class="diagramtop"><span class="mono">AGENT EXECUTION LOOP</span><span>Conceptual architecture</span></div>
+<pre class="mermaid">
+flowchart TD
+  A(["OBSERVE<br/>Goal + context"]) --> B["REASON<br/>Understand current state"]
+  B --> C["PLAN<br/>Choose next action"]
+  C --> D{"ACT<br/>Tool needed?"}
+  D -->|Yes| E["Validate + authorize"]
+  E --> F["Execute tool"]
+  F --> G["EVALUATE<br/>Inspect result"]
+  G --> H{"Goal complete?"}
+  H -->|No| A
+  H -->|Yes| I(["FINAL RESPONSE"])
+  D -->|No| I
+</pre>
+</div></div>
+</div></section>
+<section class="section" id="curriculum"><div class="wrap">
+<div class="sectionhead"><div><div class="mono">THE CURRICULUM</div><h2>Nine modules. One learning path.</h2></div><p>Move from core concepts to production-grade system design. Each module connects concepts to implementation and engineering trade-offs.</p></div>
+<div class="modulegrid">
+<a class="module active" href="https://github.com/codergirl73/agentic-ai-system-design/blob/master/MODULE_1_FOUNDATIONS.md"><div class="moduletop"><span class="num">MODULE 01</span><span class="status current">Start here</span></div><h3>Foundations of Agentic AI</h3><p>Agents, models, tools, memory, planning, execution loops, and a first Python agent.</p><span class="modulefoot">Open learning guide →</span></a>
+<a class="module" href="https://github.com/codergirl73/agentic-ai-system-design/blob/master/MODULE_2_RAG_FUNDAMENTALS.md"><div class="moduletop"><span class="num">MODULE 02</span><span class="status">Learning guide</span></div><h3>RAG Fundamentals</h3><p>Why retrieval-augmented generation exists, its architecture, and the basic RAG pipeline.</p><span class="modulefoot">Explore module →</span></a>
+<a class="module" href="https://github.com/codergirl73/agentic-ai-system-design/blob/master/MODULE_3_DOCUMENT_PROCESSING.md"><div class="moduletop"><span class="num">MODULE 03</span><span class="status">Learning guide</span></div><h3>Document Processing & Embeddings</h3><p>Ingestion, parsing, chunking strategies, embeddings, and indexing decisions.</p><span class="modulefoot">Explore module →</span></a>
+<a class="module" href="https://github.com/codergirl73/agentic-ai-system-design/blob/master/MODULE_4_INFORMATION_RETRIEVAL.md"><div class="moduletop"><span class="num">MODULE 04</span><span class="status">Learning guide</span></div><h3>Information Retrieval</h3><p>Lexical search, BM25, dense retrieval, vector search, and retrieval evaluation.</p><span class="modulefoot">Explore module →</span></a>
+<a class="module" href="https://github.com/codergirl73/agentic-ai-system-design/blob/master/MODULE_5_ADVANCED_RETRIEVAL.md"><div class="moduletop"><span class="num">MODULE 05</span><span class="status">Learning guide</span></div><h3>Advanced Retrieval</h3><p>Hybrid search, reciprocal rank fusion, reranking, query rewriting, and expansion.</p><span class="modulefoot">Explore module →</span></a>
+<a class="module" href="https://github.com/codergirl73/agentic-ai-system-design/blob/master/MODULE_6_ADVANCED_RAG.md"><div class="moduletop"><span class="num">MODULE 06</span><span class="status">Learning guide</span></div><h3>Advanced RAG</h3><p>HyDE, contextual compression, Self-RAG, CRAG, Adaptive RAG, and Graph RAG.</p><span class="modulefoot">Explore module →</span></a>
+<a class="module" href="https://github.com/codergirl73/agentic-ai-system-design/blob/master/MODULE_7_AGENT_ARCHITECTURE.md"><div class="moduletop"><span class="num">MODULE 07</span><span class="status">Learning guide</span></div><h3>Agent Architecture & Orchestration</h3><p>Tool orchestration, multi-agent patterns, state, memory, and coordination.</p><span class="modulefoot">Explore module →</span></a>
+<a class="module" href="https://github.com/codergirl73/agentic-ai-system-design/blob/master/MODULE_8_PRODUCTION_ENGINEERING.md"><div class="moduletop"><span class="num">MODULE 08</span><span class="status">Learning guide</span></div><h3>Production Engineering</h3><p>Evaluation, observability, reliability, security, latency, and cost controls.</p><span class="modulefoot">Explore module →</span></a>
+<a class="module" href="https://github.com/codergirl73/agentic-ai-system-design/blob/master/MODULE_9_END_TO_END_SYSTEM_DESIGN.md"><div class="moduletop"><span class="num">MODULE 09</span><span class="status">Learning guide</span></div><h3>End-to-End System Design</h3><p>Bring the pieces together through complete system design projects and trade-offs.</p><span class="modulefoot">Explore module →</span></a>
+</div>
+<p style="color:var(--muted);font-size:.8rem;margin-top:17px">Content status: Module 1 is the detailed chapter currently in development. Modules 2–9 are roadmap guides and will be expanded as the curriculum progresses.</p>
+</div></section>
+<section class="section" id="learning-path"><div class="wrap">
+<div class="sectionhead"><div><div class="mono">HOW TO LEARN</div><h2>Learn it. Build it. Explain it.</h2></div><p>A repeatable study rhythm that turns concepts into practical engineering skills.</p></div>
+<div class="path">
+<div class="pathcard"><span class="step">STEP 01</span><h3>Understand the concept</h3><p>Start from first principles. Learn the problem, vocabulary, and architecture.</p></div>
+<div class="pathcard"><span class="step">STEP 02</span><h3>Trace the system</h3><p>Follow data and control flow with diagrams, examples, and failure scenarios.</p></div>
+<div class="pathcard"><span class="step">STEP 03</span><h3>Implement in Python</h3><p>Build a small working version. Add tests and inspect its behavior.</p></div>
+<div class="pathcard"><span class="step">STEP 04</span><h3>Defend trade-offs</h3><p>Practice design questions around scale, cost, latency, reliability, and safety.</p></div>
+</div>
+</div></section>
+<section class="section" id="resources"><div class="wrap">
+<div class="sectionhead"><div><div class="mono">GO DEEPER</div><h2>Project resources.</h2></div><p>Use the supporting repository material alongside the learning modules.</p></div>
+<div class="resources">
+<div class="resource"><div class="icon">⌘</div><h3>Hands-on implementations</h3><p>Small Python projects, tests, and implementation notes that make architecture concrete.</p><a class="textlink" href="https://github.com/codergirl73/agentic-ai-system-design/tree/master/implementations">Browse implementations ↗</a></div>
+<div class="resource"><div class="icon">◇</div><h3>Company practices library</h3><p>Educational system-design exercises inspired by publicly documented engineering themes.</p><a class="textlink" href="https://github.com/codergirl73/agentic-ai-system-design/tree/master/company-practices">Explore case studies ↗</a></div>
+<div class="resource"><div class="icon">▤</div><h3>System design interviews</h3><p>Practice prompts and trade-off discussions for explaining architecture clearly.</p><a class="textlink" href="https://github.com/codergirl73/agentic-ai-system-design/blob/master/SYSTEM_DESIGN_INTERVIEWS.md">Open interview prep ↗</a></div>
+</div>
+</div></section>
+<section class="section"><div class="wrap"><div class="callout"><div><h2>Ready to start with the fundamentals?</h2><p>Begin with Module 1 and build your understanding one layer at a time.</p></div><a class="btn primary" href="https://github.com/codergirl73/agentic-ai-system-design/blob/master/MODULE_1_FOUNDATIONS.md">Start Module 1 →</a></div></div></section>
+</main>
+<footer class="footer"><div class="wrap footerin"><span>© 2026 Agentic AI System Design · Open learning project</span><span>Learn deeply. Design deliberately. Build responsibly.</span><a class="textlink" href="https://github.com/codergirl73/agentic-ai-system-design">GitHub repository ↗</a></div></footer>
+</body></html>
