@@ -271,7 +271,147 @@ This separation is foundational to later modules on chunking, embeddings, vector
 
 ---
 
+## 4.4 How does a retriever find relevant information?
+
+The retriever is the component that searches the knowledge base. Different retrievers represent and compare text in different ways.
+
+### Method A: Keyword retrieval
+
+Keyword retrieval looks for terms that appear in both the question and the document.
+
+Example:
+
+- Question: "What is the penalty for late work?"
+- Passage: "Late submissions lose 10 percent of available marks per calendar day."
+
+The shared terms "late" and "work/submissions" can help the retriever find the passage.
+
+**Strengths**
+- Simple to understand and debug.
+- Often effective for exact names, IDs, product codes, and technical terms.
+- Does not require an embedding model.
+
+**Limitations**
+- A query and passage can mean the same thing but use different words.
+- Common words can create noisy matches.
+- Matching words does not necessarily mean matching intent.
+
+BM25 is a widely used keyword-ranking method. It improves on simple word counting by accounting for term frequency, document length, and how informative a term is across the collection. You will study it more deeply in the Information Retrieval module.
+
+### Method B: Dense vector retrieval
+
+A text embedding model converts text into a list of numbers called a **vector**. The vector is intended to represent aspects of the text's meaning.
+
+For example, these sentences use different words but have similar meaning:
+
+- "How do I get my money back?"
+- "What is the refund process?"
+
+An embedding model may place their vectors near one another in vector space. A dense retriever can therefore find semantically related passages even when exact keywords differ.
+
+A simplified representation:
+
+```python
+query_vector = [0.12, 0.81, 0.33, 0.05]
+passage_vector = [0.10, 0.79, 0.30, 0.08]
+```
+
+These numbers are illustrative only. Real embedding models usually produce vectors with many more dimensions.
+
+### What is similarity?
+
+A common comparison is **cosine similarity**:
+
+\[
+\operatorname{cosine}(A,B)=\frac{A\cdot B}{\|A\|\|B\|}
+\]
+
+It compares the angle between two vectors. A higher cosine similarity generally indicates that the vectors point in a more similar direction. The exact interpretation and score range depend on the embedding model and implementation.
+
+**Tiny numerical example**
+
+Let:
+
+\[
+A=(1,0),\quad B=(0.8,0.6)
+\]
+
+The dot product is:
+
+\[
+A\cdot B=(1)(0.8)+(0)(0.6)=0.8
+\]
+
+The vector lengths are both 1, so cosine similarity is 0.8. This is a relatively high directional similarity.
+
+Do not interpret a similarity score of 0.8 as "80 percent correct." Similarity is a ranking signal, not a probability that the passage answers the question.
+
+### Method C: Hybrid retrieval
+
+Hybrid retrieval combines keyword and dense retrieval.
+
+Why combine them?
+
+- Keyword search can be strong for exact terms, names, and identifiers.
+- Dense retrieval can be strong for paraphrases and semantic similarity.
+- Combining them can improve coverage across different query types.
+
+A later advanced retrieval module will cover score fusion, reciprocal rank fusion, and reranking in detail.
+
+## 4.5 What do top-K and similarity thresholds mean?
+
+A retriever often returns the top K candidate passages.
+
+- If K = 3, the retriever returns up to three candidates.
+- A small K can reduce noise and context cost, but may miss useful evidence.
+- A large K can improve recall, but may add irrelevant passages and increase latency and token use.
+
+Some systems also use a score threshold. A passage below the threshold may be excluded. Thresholds must be tuned on representative evaluation data; there is no universal best value.
+
+**Important:** the top result is not automatically relevant. The system should be evaluated on whether the retrieved passages actually support the question.
+
+## 4.6 From retrieved passages to model context
+
+Retrieval results are not automatically ready to send to the model. A context builder should:
+
+1. Remove duplicates.
+2. Preserve source IDs and document metadata.
+3. Prefer the current authorized document version.
+4. Keep passages within the context budget.
+5. Arrange evidence in a clear, consistent format.
+6. Avoid mixing evidence from different access-permission levels.
+
+Example context:
+
+```text
+[Source P2 | Late policy | Page 2 | Version 2026-08]
+Late submissions lose 10 percent of available marks per
+calendar day, up to three days.
+
+[Source P3 | Extension policy | Page 1 | Version 2026-08]
+Students with an approved extension should follow the
+revised deadline recorded by the instructor.
+```
+
+The model can then answer using this evidence and cite P2 or P3. Keeping metadata attached throughout the pipeline is what makes reliable citations possible.
+
+## 4.7 What RAG does not guarantee
+
+RAG improves access to relevant evidence, but it does not automatically guarantee:
+
+- That the correct document was indexed.
+- That the retriever found the best passage.
+- That the passage is up to date.
+- That the model interpreted the passage correctly.
+- That the answer is free of unsupported claims.
+- That a user is authorized to see every retrieved document.
+
+These are separate engineering responsibilities. RAG quality depends on the entire pipeline, not just the language model.
+
+---
+
 # Lesson 5 — Grounding, citations, and failure modes
+
 
 ## 5.1 What does it mean to ground an answer?
 
