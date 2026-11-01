@@ -4,6 +4,13 @@
 
 > Learn the fundamentals. Build the systems. Understand the trade-offs.
 
+
+## Website
+
+A responsive GitHub Pages learning site is included in this repository: **[Agentic AI Systems — Learn. Design. Build.](https://codergirl73.github.io/agentic-ai-system-design/)**.
+
+To publish it, open **Settings → Pages** in the repository and set the build/deployment source to **GitHub Actions**. The included workflow deploys the static site on pushes to `master`. The first deployment may take a few minutes; check the **Actions** tab for its status.
+
 ## Learning method
 Every topic includes: fundamentals, Mermaid architecture diagrams, real-world examples, selected research papers, Python implementation with tests, module-wise interview questions, company-style system design questions, explained answers, practical exercises, and a knowledge check.
 
