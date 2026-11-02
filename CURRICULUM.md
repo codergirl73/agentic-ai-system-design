@@ -123,3 +123,13 @@ Use these resources alongside the curriculum when you want to apply module conce
 
 ## Topic completion standard
 A topic is complete when you can explain it from first principles, draw its architecture, implement and test its core idea, answer interview questions, discuss limitations and trade-offs, and identify relevant research when meaningful.
+
+
+## Specialized track — GPU Computing & AI Infrastructure
+
+The GPU track is maintained separately from the nine Agentic AI modules so learners can study hardware and systems in a logical prerequisite order.
+
+- [GPU Computing & AI Infrastructure curriculum](GPU_COMPUTING_CURRICULUM.md) — 36-topic roadmap from computer architecture and CUDA to LLM inference, multi-GPU serving, production operations, and projects.
+- [GPU-01 — Computer Architecture for GPU Programmers](GPU_01_COMPUTER_ARCHITECTURE.md) — first-principles introduction with architecture diagrams, worked bandwidth and arithmetic-intensity examples, exercises, calculations, and answers.
+
+**Learning sequence:** Computer architecture → GPU hardware → parallel programming → CUDA → deep-learning computation → LLM inference → inference engines → multi-GPU production systems.
