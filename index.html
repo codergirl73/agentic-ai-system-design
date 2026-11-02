@@ -23,14 +23,14 @@ mermaid.initialize({startOnLoad:true,theme:'dark',securityLevel:'strict',flowcha
 <body>
 <header class="nav"><div class="wrap navin">
 <a class="brand" href="#"><span class="mark">∿</span><span>AGENTIC<span style="color:var(--cyan)">.SYSTEMS</span></span></a>
-<nav class="navlinks"><a href="#curriculum">Curriculum</a><a href="#learning-path">Learning path</a><a href="#resources">Resources</a></nav>
+<nav class="navlinks"><a href="#curriculum">Curriculum</a><a href="#learning-path">Learning path</a><a href="#gpu-track">GPU & inference</a><a href="#resources">Resources</a></nav>
 <a class="navcta" href="https://github.com/codergirl73/agentic-ai-system-design">View on GitHub ↗</a>
 </div></header>
 <main>
 <section class="hero"><div class="wrap">
 <div class="eyebrow"><span class="dot"></span> OPEN LEARNING CURRICULUM · BEGINNER TO ADVANCED</div>
 <h1>Understand agents.<br><span>Design systems.</span><br>Build what matters.</h1>
-<p>A hands-on path through Agentic AI system design—from the foundations of agents and RAG to retrieval, orchestration, production engineering, and end-to-end architecture.</p>
+<p>A hands-on learning platform spanning Agentic AI, RAG, system design, GPU computing, CUDA, and production LLM inference—from first principles to end-to-end architecture.</p>
 <div class="actions"><a class="btn primary" href="#curriculum">Explore the curriculum <span>→</span></a><a class="btn secondary" href="https://github.com/codergirl73/agentic-ai-system-design">Explore the repository ↗</a></div>
 <div class="hero-meta"><div><strong>09</strong> learning modules</div><div><strong>Build-first</strong> practical approach</div><div><strong>Python + Mermaid</strong> implementation & architecture</div></div>
 </div></section>
@@ -79,6 +79,31 @@ flowchart TD
 <div class="pathcard"><span class="step">STEP 02</span><h3>Trace the system</h3><p>Follow data and control flow with diagrams, examples, and failure scenarios.</p></div>
 <div class="pathcard"><span class="step">STEP 03</span><h3>Implement in Python</h3><p>Build a small working version. Add tests and inspect its behavior.</p></div>
 <div class="pathcard"><span class="step">STEP 04</span><h3>Defend trade-offs</h3><p>Practice design questions around scale, cost, latency, reliability, and safety.</p></div>
+</div>
+</div></section>
+<section class="section" id="gpu-track"><div class="wrap">
+<div class="sectionhead"><div><div class="mono">SPECIALIZED LEARNING TRACK · GPU-01 → GPU-36</div><h2>GPU computing & AI infrastructure.</h2></div><p>Go beneath AI applications: understand GPU hardware, learn CUDA, map deep-learning operations to parallel execution, and design efficient LLM inference systems.</p></div>
+<div class="feature">
+<div class="featurecopy"><div class="mono">BEGINNER → ADVANCED</div><h3>From computer architecture to production inference.</h3><p>Start with CPU/GPU fundamentals, memory hierarchy, SMs and warps. Progress through CUDA kernels, tensor computation, prefill/decode, KV cache, inference engines, multi-GPU serving, and production optimization.</p>
+<div class="tagrow"><span class="tag">GPU architecture</span><span class="tag">CUDA</span><span class="tag">PyTorch</span><span class="tag">LLM inference</span><span class="tag">vLLM</span><span class="tag">Multi-GPU</span></div>
+<a class="btn primary" href="./guide.html?module=gpu-1">Start GPU-01 →</a>
+<a class="btn secondary" href="https://github.com/codergirl73/agentic-ai-system-design/blob/master/GPU_COMPUTING_CURRICULUM.md">Full GPU curriculum ↗</a>
+</div>
+<div class="diagramcard"><div class="diagramtop"><span class="mono">GPU LEARNING PATH</span><span>Conceptual progression</span></div>
+<pre class="mermaid">
+flowchart TD
+ A["Computer architecture"] --> B["GPU hardware & memory"]
+ B --> C["Parallel programming"]
+ C --> D["CUDA kernels"]
+ D --> E["Deep-learning computation"]
+ E --> F["LLM inference architecture"]
+ F --> G["Inference engines"]
+ G --> H["Multi-GPU production systems"]
+</pre>
+</div></div>
+<div class="modulegrid" style="margin-top:16px">
+<a class="module active" href="./guide.html?module=gpu-1"><div class="moduletop"><span class="num">GPU-01</span><span class="status current">Start here</span></div><h3>Computer Architecture for GPU Programmers</h3><p>CPU vs GPU, latency and throughput, SIMT, SMs, warps, memory hierarchy, bandwidth, and the roofline intuition.</p><span class="modulefoot">Open first chapter →</span></a>
+<a class="module" href="https://github.com/codergirl73/agentic-ai-system-design/blob/master/GPU_COMPUTING_CURRICULUM.md"><div class="moduletop"><span class="num">GPU-02 → GPU-36</span><span class="status">Roadmap</span></div><h3>Complete learning roadmap</h3><p>CUDA, GPU kernels, PyTorch internals, LLM inference, vLLM, TensorRT, Triton, multi-GPU systems, and projects.</p><span class="modulefoot">Explore all topics ↗</span></a>
 </div>
 </div></section>
 <section class="section" id="resources"><div class="wrap">
