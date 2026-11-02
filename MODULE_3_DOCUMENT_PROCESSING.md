@@ -1,5 +1,10 @@
 # Module 3 — Document Processing, Chunking and Embeddings
 
+![Original architecture illustration: document processing pipeline](assets/illustrations/module-3-document-pipeline.svg)
+
+*Figure 1. Document processing preserves source provenance as content becomes chunks and vectors.*
+
+
 **Level:** Beginner → Intermediate → Advanced  
 **Estimated time:** 3–4 hours  
 **Prerequisites:** Module 2 — RAG Fundamentals; basic Python  
