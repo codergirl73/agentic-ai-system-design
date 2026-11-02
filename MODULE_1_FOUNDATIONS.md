@@ -780,3 +780,131 @@ For each paper, write:
 ## Next module
 
 **Module 2 — RAG Fundamentals:** understand retrieval-augmented generation, why it is needed, how it differs from fine-tuning, and how a basic RAG pipeline works.
+
+
+---
+
+# Visual deep dive — understand an agent by tracing one task
+
+Use this section as a visual companion to the earlier explanations. Follow the same example throughout: a user asks an agent to find three reliable papers about RAG, compare their approaches, and prepare a cited summary.
+
+## A. Model, chatbot, workflow, and agent are different layers
+
+~~~mermaid
+flowchart TD
+    U["User request"] --> C["Application"]
+    C --> M["Language model"]
+    M --> C
+    C --> U
+    C --> T["Optional tools"]
+    T --> C
+~~~
+
+A language model produces outputs from input context. A chatbot is an application that lets a person converse with a model. A workflow is a predefined sequence of steps. An agent adds a decision loop: it can choose which permitted step or tool to use next based on the goal and the latest observations.
+
+These categories can overlap. An agent usually contains a model and may be presented through a chatbot interface. The important difference is not the user interface; it is who selects the next action and how the system checks progress.
+
+| System | Who chooses the next step? | Example |
+|---|---|---|
+| Model call | The calling application | Classify one paragraph |
+| Chatbot | Usually the user, turn by turn | Ask and answer questions |
+| Fixed workflow | The developer-defined sequence | Extract, summarize, email draft |
+| Agent | The agent's controller within limits | Search, inspect, refine, compare |
+
+## B. Architecture: who is responsible for what?
+
+~~~mermaid
+flowchart TD
+    U["User goal"] --> G["Goal and policy checks"]
+    G --> O["Orchestrator"]
+    O --> L["Language model"]
+    L --> P["Proposed next step"]
+    P --> V["Permission and argument validation"]
+    V -->|Allowed| X["Tool executor"]
+    V -->|Not allowed| H["Ask user or stop"]
+    X --> E["External environment"]
+    E --> R["Tool result"]
+    R --> S["State update"]
+    S --> O
+    O --> F["Final response"]
+~~~
+
+Think of the orchestrator as the traffic controller. The model may propose an action, but the application should validate the action before execution. A tool result is an observation, not proof that the overall task is complete.
+
+**Concrete trace**
+
+1. Goal: find three papers and compare them.
+2. Plan: search for candidate papers.
+3. Action: call an approved read-only search tool.
+4. Observation: inspect titles, abstracts, dates, and links.
+5. Evaluation: check whether three relevant sources have been found.
+6. Next step: search again if evidence is incomplete, otherwise compare.
+7. Finish: produce a summary with references and limitations.
+
+## C. The execution loop as a state machine
+
+~~~mermaid
+stateDiagram-v2
+    [*] --> Understand
+    Understand --> Plan
+    Plan --> Validate
+    Validate --> Act: permitted
+    Validate --> AskOrStop: needs approval or invalid
+    Act --> Observe
+    Observe --> Evaluate
+    Evaluate --> Plan: more work needed
+    Evaluate --> Finish: goal met
+    AskOrStop --> [*]
+    Finish --> [*]
+~~~
+
+The loop is not "keep calling the model until it says stop." The application needs explicit stop conditions: goal satisfied, step budget reached, deadline reached, cost budget reached, repeated lack of progress, or a policy check that requires stopping.
+
+## D. State versus memory: a worked example
+
+Imagine a research agent working on one request.
+
+| Information | Where it belongs | Why |
+|---|---|---|
+| Current search query | Task state | Needed for the next step in this run |
+| Papers already inspected | Task state | Prevents duplicate work |
+| Remaining tool-call budget | Task state | Enforces the current run's limit |
+| User's approved citation style | Persistent preference, if explicitly saved | May help across separate tasks |
+| Full search result payload | Short-lived state or referenced storage | Avoids placing everything in every prompt |
+
+**State** describes what is happening now. **Memory** is information retained for later use. A vector database is not automatically an agent's memory; it is a storage and retrieval component that an application may use.
+
+## E. Tool calls: proposal is not permission
+
+~~~mermaid
+flowchart TD
+    A["Model proposes action"] --> B["Check tool is allowed"]
+    B --> C["Validate arguments"]
+    C --> D{"Does action have consequences?"}
+    D -->|No, read-only| E["Execute within limits"]
+    D -->|Yes| F["Require approval or stronger controls"]
+    E --> G["Record result"]
+    F --> H["Wait for approval or stop"]
+    G --> I["Verify outcome"]
+~~~
+
+A search call and a change to an external record are not equivalent. Classify tools by their effects, validate arguments, limit scope, and verify results. For consequential operations, use human approval where appropriate.
+
+## F. Failure walkthrough
+
+Suppose the search tool returns only one useful paper.
+
+- **Weak controller:** pretends the goal is complete and writes a three-paper comparison.
+- **Better controller:** records that one source is relevant, identifies what is missing, and performs another bounded search.
+- **Safe stopping:** if the time or step budget is exhausted, explains the limitation instead of inventing sources.
+
+## G. Quick design exercise
+
+Design an agent that summarizes three research papers. Identify:
+1. The goal and measurable completion condition.
+2. Two read-only tools it needs.
+3. Three pieces of task state.
+4. One condition that should cause it to ask the user or stop.
+5. One way to verify that the final references actually support the summary.
+
+**Suggested answer:** Completion requires three relevant papers with retrievable references and a comparison grounded in their contents. Search and document-reading tools can be read-only. State can include candidate URLs, inspected-paper IDs, and remaining step budget. Stop or ask if the sources are inaccessible or the requested scope is unclear. Verify each citation against the paper metadata and the specific claim it supports.
