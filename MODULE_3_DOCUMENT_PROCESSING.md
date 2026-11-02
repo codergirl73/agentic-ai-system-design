@@ -1192,3 +1192,249 @@ When reading an embedding paper or model card, record: training objective, train
 ## What comes next?
 
 **Module 4 — Information Retrieval:** move from preparing and embedding content to understanding how search systems retrieve and rank it, including inverted indexes, TF-IDF, BM25, vector search, and retrieval evaluation.
+
+
+---
+
+# Deep-dive visual lab — follow one document all the way through
+
+This section connects the individual lessons into one concrete example. Imagine a university wants students to ask questions about its assignment policy. The system must answer questions such as **"How much is deducted for late work?"** and cite the exact policy section.
+
+## A. Before and after: what the pipeline changes
+
+The original source is designed for people to read from beginning to end. A retrieval system needs smaller records that can be searched independently.
+
+**Source document**
+
+```text
+University Assignment Policy
+
+Late submissions
+Late work loses 10 percent per calendar day unless an extension
+has been approved. The deduction is applied to the assignment
+score, not to the course grade directly.
+
+Approved extensions
+Students with an approved extension should use the revised
+deadline recorded by the instructor.
+```
+
+**After parsing and chunking**
+
+| Chunk | Section context | Text stored | Source metadata |
+|---|---|---|---|
+| C1 | Late submissions | Late work loses 10 percent per calendar day... | policy.md, heading, offsets |
+| C2 | Approved extensions | Students with an approved extension... | policy.md, heading, offsets |
+
+The heading is important context. If the chunk stored only "Late work loses 10 percent..." it would still be understandable here, but many documents contain pronouns and references such as "this exception" or "the revised date." Retaining section context reduces ambiguity.
+
+## B. Visual map: source to searchable records
+
+~~~mermaid
+flowchart TD
+    A["policy.md source file"] --> B["Read UTF-8 text"]
+    B --> C["Normalize whitespace"]
+    C --> D["Detect headings and paragraphs"]
+    D --> E["Create bounded chunks"]
+    E --> F["Attach IDs and provenance"]
+    F --> G["Embedding model"]
+    G --> H["Vector plus original text"]
+    H --> I["JSONL or vector database"]
+    I --> J["Validate records and dimensions"]
+    J --> K["Ready for retrieval"]
+~~~
+
+The vector is not a replacement for the original text. Keep both. The vector supports similarity search; the text supports answer generation, inspection, and citations.
+
+## C. Chunk boundaries illustrated
+
+Suppose a paragraph has 18 tokens and the teaching example uses chunks of 8 tokens with an overlap of 2 tokens. (These token numbers are illustrative.)
+
+~~~text
+Tokens:  01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18
+
+Chunk 1: [01 02 03 04 05 06 07 08]
+Chunk 2:                   [07 08 09 10 11 12 13 14]
+Chunk 3:                                           [13 14 15 16 17 18]
+~~~
+
+The overlap means neighboring chunks repeat a small boundary region. It can help when a question depends on a phrase near a split. But overlap is not free: repeated text creates more vectors, consumes storage, and may cause near-duplicate search results.
+
+**Important distinction:** the project uses character windows to keep the baseline easy to run. The diagram above uses token numbers to explain the concept. Characters and tokens are different units. A tokenizer can split one word into multiple tokens, and the number of tokens per character varies by language and content.
+
+## D. Compare chunking methods on the same policy
+
+| Method | Possible result | Main risk |
+|---|---|---|
+| Fixed 100-character windows | A rule may be cut mid-sentence | Boundary can break meaning |
+| Sentence grouping | One or more complete sentences | A sentence may depend on prior context |
+| Paragraph grouping | Whole policy paragraph | One paragraph may be too large |
+| Structure-aware | Heading plus paragraph, split only if too large | Requires reliable structure extraction |
+| Semantic | Split near a topic shift | More computation and tuning |
+
+For a policy handbook, start with **structure-aware chunking**. Keep headings with their sections, keep list items with their labels, and keep table headers with their rows. Then split only when a section exceeds the model's input limit or your retrieval target size.
+
+## E. Embeddings: a geometric intuition
+
+An embedding model maps text to a list of numbers called a vector. You can picture a vector as a point in a high-dimensional space. Texts with related meaning may be placed closer together than unrelated texts.
+
+~~~text
+Text passage
+    |
+    v
+Embedding model
+    |
+    v
+[0.12, -0.08, 0.44, ...]
+    |
+    v
+Point in a high-dimensional semantic space
+~~~
+
+A real embedding may have hundreds or thousands of dimensions. A two-dimensional sketch is only an analogy; it cannot show the full geometry.
+
+For example, these queries and passages may be semantically related even if they use different words:
+
+- Query: "What penalty applies if an assignment is late?"
+- Passage: "Late work loses 10 percent per calendar day."
+
+A keyword-only system may miss some paraphrases. An embedding model can represent semantic similarity, although it is not guaranteed to understand every domain-specific term or retrieve the correct passage.
+
+## F. What does vector dimension mean?
+
+A vector dimension is the number of numeric coordinates produced for one input text.
+
+~~~python
+embedding = [0.12, -0.08, 0.44, 0.31]
+print(len(embedding))  # 4
+~~~
+
+This toy vector has 4 dimensions. If a model outputs 384 numbers, each text is represented by a 384-dimensional vector.
+
+Dimension is **not**:
+- the number of words in the passage;
+- the number of chunks in the document;
+- a direct measure of accuracy;
+- a score saying how important the text is.
+
+All vectors compared in one vector-search operation must use compatible dimensions and the same embedding space/model. A 384-dimensional vector from one model is not directly comparable to a 768-dimensional vector from another. Even if two models happen to output the same dimension, their vector spaces may not be compatible.
+
+### Storage calculation
+
+If there are 100,000 chunks, each embedding has 384 dimensions, and each coordinate is stored as a 4-byte float:
+
+[
+100{,}000 \times 384 \times 4 = 153{,}600{,}000 \text{ bytes}
+]
+
+That is approximately **153.6 MB** in decimal units for raw vector values alone. Actual storage is larger because the database also stores IDs, metadata, text, indexes, and bookkeeping.
+
+## G. Similarity: a tiny worked example
+
+For normalized vectors, cosine similarity is the dot product:
+
+[
+\operatorname{cosine}(a,b)=\frac{a\cdot b}{\|a\|\|b\|}
+]
+
+Suppose two normalized toy vectors are:
+
+[
+a=[1,0], \quad b=[0.8,0.6]
+]
+
+Their dot product is:
+
+[
+a\cdot b=(1)(0.8)+(0)(0.6)=0.8
+]
+
+Both have length 1, so cosine similarity is **0.8**. This indicates a relatively aligned direction in this tiny illustration. It is not an 80% probability that the passage is correct.
+
+A production embedding space has many more dimensions. Similarity scores are model- and dataset-dependent, so choose thresholds by evaluating real queries rather than assuming one universal cutoff.
+
+## H. Hands-on: inspect one record before generating vectors
+
+Run the project without embeddings first:
+
+```bash
+python -m src.pipeline --input data/sample --output artifacts/chunks.jsonl
+```
+
+Then open `artifacts/chunks.jsonl`. For each line, inspect:
+
+- `chunk_id`: unique record identifier;
+- `text`: the passage that will be embedded;
+- `metadata.heading`: section context;
+- `metadata.source_path`: where the passage came from;
+- `metadata.start_char` and `end_char`: approximate source offsets;
+- `embedding`: null until the embedding option is used.
+
+Only after the chunks look sensible, generate embeddings:
+
+```bash
+python -m src.pipeline --input data/sample --output artifacts/chunks_with_embeddings.jsonl --embed
+```
+
+This order matters. If the chunks are poor, generating vectors simply makes poor chunks searchable.
+
+## I. Model selection: questions to ask
+
+Do not choose an embedding model from dimension alone. Compare:
+
+1. **Task fit:** Does it retrieve the kinds of questions your users ask?
+2. **Language coverage:** Does it support the languages in the documents and queries?
+3. **Input length:** Can it accept the chunk sizes you plan to create?
+4. **Quality:** How does it perform on a labelled retrieval test set?
+5. **Latency and throughput:** How quickly can it embed documents and queries?
+6. **Cost and deployment:** Is it practical to run locally or through a service?
+7. **Vector size:** What are the storage and index implications?
+8. **Compatibility:** Are query and document embeddings generated in the intended compatible way?
+
+A smaller vector is not automatically better, and a larger vector is not automatically more accurate. Measure retrieval quality and operational cost together.
+
+## J. Troubleshooting visual guide
+
+~~~mermaid
+flowchart TD
+    A["Search returns poor passages"] --> B{"Are extracted texts correct?"}
+    B -->|No| C["Inspect parser and OCR output"]
+    B -->|Yes| D{"Are chunk boundaries coherent?"}
+    D -->|No| E["Revise structure and chunk size"]
+    D -->|Yes| F{"Are query and document vectors compatible?"}
+    F -->|No| G["Use the same compatible model space"]
+    F -->|Yes| H["Evaluate retrieval and ranking"]
+    H --> I["Tune model, filters, and retrieval settings"]
+~~~
+
+| Symptom | Likely cause to inspect | First diagnostic |
+|---|---|---|
+| Relevant paragraph is missing | Parsing or extraction failure | Compare extracted text with source |
+| Passage is retrieved without its exception | Chunk boundary or missing context | Inspect neighboring chunks |
+| Results are topically close but incorrect | Embedding or ranking limitation | Build labelled query examples |
+| Similarity search fails on vector shape | Dimension mismatch | Check model name and vector lengths |
+| Old policy appears in answers | Versioning or stale index | Inspect version metadata and deletion/update flow |
+| User sees a restricted document | Authorization filter missing | Test access checks before returning chunks |
+
+## K. Deep-dive review questions
+
+1. Why should the original text be stored alongside the embedding?
+2. Why is structure-aware chunking a sensible starting point for policy documents?
+3. What is the difference between chunk overlap and duplicated documents?
+4. Why can two vectors with the same number of dimensions still be incompatible?
+5. If a model outputs 768 dimensions instead of 384, what changes in storage and compatibility?
+6. Why should a team inspect chunk records before spending resources on embedding generation?
+7. What additional metadata would you preserve to cite a paragraph in a PDF accurately?
+8. Why is a similarity score not the same thing as answer confidence?
+
+### Worked answers
+
+1. The vector is useful for matching, but the original text is needed for the language model to read, for people to inspect, and for citations.
+2. It keeps headings and related content together, which helps passages remain meaningful when retrieved alone.
+3. Overlap intentionally repeats a boundary region between adjacent chunks from one document. Duplicate documents are repeated source content and need deduplication or source management.
+4. Dimension only describes vector length. Different models can learn different coordinate spaces, so their values do not necessarily have comparable meanings.
+5. Raw float32 storage per vector doubles from 384 × 4 bytes to 768 × 4 bytes. Existing vectors must not be mixed with the new model's vectors in one comparison space; re-embed or maintain separate indexes.
+6. Chunk inspection catches extraction and boundary problems before model inference adds cost without fixing the underlying content.
+7. Preserve document ID, version, page number, section heading, source URI, and character or layout offsets where available.
+8. Similarity measures geometric closeness in a model's embedding space. It does not prove that a passage is factually correct, complete, or sufficient to answer the question.
+
