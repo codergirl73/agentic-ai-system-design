@@ -1,6 +1,6 @@
 # Module 3 Project — Document Processing and Embedding Pipeline
 
-A runnable Python project that turns Markdown and text files into traceable chunks, optionally generates embeddings, and runs semantic search. This is an educational baseline; PDF/OCR adapters and a persistent vector database are extension tasks.
+A runnable Python project that turns Markdown and text files into traceable chunks, optionally generates embeddings, and runs semantic search. The learning guide also includes visual walkthroughs of chunk boundaries, vector dimensions, similarity, storage calculations, and troubleshooting. This is an educational baseline; PDF/OCR adapters and a persistent vector database are extension tasks.
 
 ## What it does
 
@@ -60,7 +60,7 @@ Chunk sizes are characters, not tokens. Production systems should use model-awar
 python -m src.pipeline --search "When is late work penalized?" --records artifacts/chunks_with_embeddings.jsonl
 ```
 
-## Design notes and limitations
+## Pipeline at a glance\n\n```text\nMarkdown / text files\n        |\n        v\n  Read and normalize\n        |\n        v\n Parse headings / blocks\n        |\n        v\n Chunk + attach metadata\n        |\n        v\n Optional embedding model\n        |\n        v\n JSONL records / semantic search\n```\n\nInspect the generated JSONL before enabling embeddings. The original text and provenance metadata must remain available; vectors do not replace source passages.\n\n## Design notes and limitations
 
 - IDs include the source content hash so changed source content creates new IDs.
 - Metadata preserves source path, file type, heading, chunk index, and character offsets.
