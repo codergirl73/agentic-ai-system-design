@@ -1,5 +1,10 @@
 # Module 1 — Foundations of Agentic AI
 
+![Original architecture illustration: AI agent control loop](assets/illustrations/module-1-agent-architecture.svg)
+
+*Figure 1. An agent separates goal interpretation, orchestration, model proposals, tool authorization, and observation.*
+
+
 **Curriculum:** v1  
 **Level:** Beginner → Intermediate  
 **Goal:** Understand what makes a system agentic, explain its architecture, implement a bounded tool-using agent, and defend design decisions in an interview.
