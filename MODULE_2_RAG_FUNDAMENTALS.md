@@ -1,5 +1,10 @@
 # Module 2 — RAG Fundamentals
 
+![Original architecture illustration: RAG pipeline](assets/illustrations/module-2-rag-pipeline.svg)
+
+*Figure 1. RAG separates offline document preparation from online retrieval and grounded generation.*
+
+
 **Level:** Beginner → Intermediate  
 **Estimated learning time:** 2–3 hours  
 **Prerequisites:** Basic Python, familiarity with what an AI model does  
