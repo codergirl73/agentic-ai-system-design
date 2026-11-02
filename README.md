@@ -64,3 +64,13 @@ Follow the learning journey and AI research explainers on Instagram: **[@frontie
 
 ## Public repository safety
 Review commits for personal information, API keys, credentials, private datasets, and copyrighted PDFs. Prefer linking to official paper pages or open-access versions instead of uploading copyrighted PDFs.
+
+
+## GPU Computing & AI Infrastructure
+
+A dedicated beginner-to-advanced track covering computer architecture, GPU execution and memory, CUDA programming, deep-learning computation, LLM inference, serving engines, multi-GPU systems, and production operations.
+
+- [Complete GPU curriculum](GPU_COMPUTING_CURRICULUM.md) — 36-topic structured roadmap.
+- [GPU-01: Computer Architecture for GPU Programmers](GPU_01_COMPUTER_ARCHITECTURE.md) — first chapter with Mermaid diagrams, worked examples, exercises, calculations, and answers.
+
+The GPU track complements the Agentic AI modules and System Design resources. It is designed to teach both the underlying hardware concepts and how those concepts affect real AI inference systems.
