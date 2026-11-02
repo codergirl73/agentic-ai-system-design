@@ -754,3 +754,179 @@ For each paper, record: problem, assumptions, method, architecture, evaluation s
 ## Next module
 
 **Module 3 — Document Processing & Embeddings:** learn how raw PDFs, web pages, and files become clean, searchable chunks and vector representations.
+
+
+---
+
+# Visual deep dive — trace a question through a RAG system
+
+Use one example throughout: a student asks, **"How much is deducted for a late assignment?"** The source is a university policy document.
+
+## A. RAG has two separate pipelines
+
+~~~mermaid
+flowchart TD
+    subgraph OFFLINE["Offline: prepare knowledge"]
+        D["Documents"] --> P["Parse and clean"]
+        P --> C["Chunk with metadata"]
+        C --> E["Create embeddings"]
+        E --> I["Build searchable index"]
+    end
+    subgraph ONLINE["Online: answer a question"]
+        Q["User question"] --> QE["Embed or analyze query"]
+        QE --> R["Retrieve candidate chunks"]
+        I --> R
+        R --> K["Rank and select context"]
+        K --> G["Generate grounded answer"]
+        G --> V["Check support and citations"]
+        V --> A["Return answer"]
+    end
+~~~
+
+The offline pipeline prepares reusable knowledge. The online pipeline runs for each question. Keeping these stages separate makes updates, monitoring, and debugging easier.
+
+## B. Follow one policy statement
+
+**Source passage:** "Late work loses 10 percent per calendar day unless an extension has been approved."
+
+A parser extracts the text. Chunking stores it with section context and source metadata. The index stores a searchable representation, while the original text remains available for the model and citations.
+
+~~~text
+Source file
+  policy-handbook.md
+       |
+       v
+Section: Late submissions
+       |
+       v
+Chunk text:
+"Late work loses 10 percent per calendar day..."
+       |
+       +---- metadata: document ID, heading, version
+       |
+       +---- embedding: numerical representation
+~~~
+
+A vector is not the evidence itself. The retrieved text is the evidence that the answer should use.
+
+## C. Retrieval methods illustrated
+
+~~~mermaid
+flowchart TD
+    Q["Question: late assignment deduction"] --> KW["Keyword search"]
+    Q --> DV["Dense vector search"]
+    KW --> H["Candidate passages"]
+    DV --> H
+    H --> RR["Combine and rank candidates"]
+    RR --> TOP["Top relevant passages"]
+~~~
+
+| Method | What it matches | Strength | Limitation |
+|---|---|---|---|
+| Keyword / lexical | Shared terms and term importance | Exact names, codes, phrases | May miss paraphrases |
+| Dense vector | Learned semantic relationships | Related meaning with different wording | May miss exact rare identifiers |
+| Hybrid | Both lexical and semantic signals | Broader candidate coverage | Needs ranking and tuning |
+
+Example: "What is the penalty for submitting after the deadline?" may not share the exact phrase "late work loses 10 percent." Dense retrieval may help connect the paraphrase; keyword retrieval may help when a question includes an exact course code or policy label.
+
+## D. Top-K is a selection budget, not a quality guarantee
+
+Suppose retrieval returns these illustrative candidates:
+
+| Rank | Passage | Similarity score |
+|---:|---|---:|
+| 1 | Late submissions: 10 percent per day | 0.86 |
+| 2 | Approved extensions replace original deadline | 0.79 |
+| 3 | Assignment submission receipt | 0.51 |
+| 4 | Library opening hours | 0.12 |
+
+If K = 2, the system passes the first two passages to the answer stage. These scores are illustrative, not calibrated probabilities. The second passage may be important because it qualifies the rule, even though it does not repeat the word "penalty."
+
+Choosing K involves a trade-off: too few passages may omit exceptions; too many may add noise, consume context, and make it harder for the model to focus.
+
+## E. Context assembly: what the model actually receives
+
+~~~text
+SYSTEM INSTRUCTION
+Answer only from the supplied policy passages.
+If evidence is missing, say so.
+Cite the source section.
+
+USER QUESTION
+How much is deducted for a late assignment?
+
+RETRIEVED PASSAGE 1
+Section: Late submissions
+Late work loses 10 percent per calendar day unless
+an extension has been approved.
+Source: policy-handbook.md
+
+RETRIEVED PASSAGE 2
+Section: Approved extensions
+The revised deadline replaces the original deadline.
+Source: policy-handbook.md
+
+TASK
+Write a concise answer and cite the relevant sections.
+~~~
+
+The context builder should preserve useful metadata, remove duplicate passages where appropriate, and fit the selected content within the model's context budget. It should not silently remove a critical exception just to fit more text.
+
+## F. Grounded answer versus unsupported answer
+
+**Grounded:** "The policy deducts 10 percent per calendar day from the assignment score. An approved extension changes the applicable deadline. Sources: Late submissions and Approved extensions."
+
+**Unsupported:** "The instructor will always accept late work for three days."
+
+The second statement is not supported by the retrieved passages. A RAG system must be willing to say that the documents do not establish an answer.
+
+## G. Failure diagnosis: find the stage that broke
+
+~~~mermaid
+flowchart TD
+    A["Answer is wrong or incomplete"] --> B{"Was the source parsed correctly?"}
+    B -->|No| C["Fix extraction or OCR"]
+    B -->|Yes| D{"Did chunks preserve the needed context?"}
+    D -->|No| E["Revise chunking and metadata"]
+    D -->|Yes| F{"Did retrieval find the right passages?"}
+    F -->|No| G["Improve query, index, or ranking"]
+    F -->|Yes| H{"Did generation follow the evidence?"}
+    H -->|No| I["Improve grounding instructions and checks"]
+    H -->|Yes| J["Inspect citation and answer evaluation"]
+~~~
+
+This stage-by-stage diagnosis is more useful than simply changing the language model whenever an answer is wrong.
+
+## H. RAG evaluation: what should be measured?
+
+| Layer | Example measure | Question it answers |
+|---|---|---|
+| Retrieval | Recall@K | Did the relevant passage appear in the first K results? |
+| Ranking | MRR or nDCG | Were useful passages ranked near the top? |
+| Answer | Faithfulness / groundedness review | Are claims supported by retrieved evidence? |
+| Citation | Citation correctness | Does each citation point to supporting text? |
+| Operations | Latency and cost | Is the system practical to run? |
+
+A useful evaluation set contains realistic questions, expected source passages, and acceptable answer criteria. Do not tune on only one demonstration question.
+
+## I. Worked retrieval metric example
+
+Suppose an evaluation question has two relevant passages. The top five retrieved results contain one relevant passage at rank 1 and the other at rank 4.
+
+- Recall@5 = 2 / 2 = **1.0**
+- Reciprocal rank for this question = 1 / 1 = **1.0**, because the first relevant result is at rank 1.
+- If the first relevant passage had appeared at rank 3, reciprocal rank would be 1 / 3.
+
+Recall measures whether relevant material was found. Reciprocal rank rewards finding a relevant result early. Neither metric alone tells us whether the final generated answer is correct.
+
+## J. System-design review
+
+Before deploying a RAG assistant, ask:
+1. How are new documents ingested and old versions replaced?
+2. How are source permissions enforced at retrieval time?
+3. How are citations mapped back to pages, sections, and versions?
+4. What happens when retrieval finds no sufficiently relevant evidence?
+5. How will retrieval and answer quality be evaluated separately?
+6. How are latency, model cost, and index freshness monitored?
+
+**Key principle:** RAG is a pipeline, not a single model call. Good answers depend on source quality, parsing, chunking, retrieval, context assembly, generation, and evaluation working together.
