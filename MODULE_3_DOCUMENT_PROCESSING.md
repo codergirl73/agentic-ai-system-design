@@ -1438,3 +1438,185 @@ flowchart TD
 7. Preserve document ID, version, page number, section heading, source URI, and character or layout offsets where available.
 8. Similarity measures geometric closeness in a model's embedding space. It does not prove that a passage is factually correct, complete, or sufficient to answer the question.
 
+
+
+---
+
+# Visual deep dive — follow a document from file to vector
+
+Use the university assignment policy example to connect parsing, chunking, embeddings, and vector storage into one coherent data flow.
+
+## A. One source, several representations
+
+~~~mermaid
+flowchart TD
+    A["Original policy document"] --> B["Extracted text and structure"]
+    B --> C["Cleaned text"]
+    C --> D["Passages with section context"]
+    D --> E["Chunk records with metadata"]
+    E --> F["Embedding vectors"]
+    E --> G["Original text retained"]
+    F --> H["Vector index"]
+    G --> I["Answer context and citations"]
+    H --> J["Retrieve candidate chunk IDs"]
+    J --> I
+~~~
+
+The original file, extracted text, chunk, and embedding are different representations of the same source. Keep their relationship explicit. If you store only vectors, you lose the readable evidence needed to construct answers and citations.
+
+## B. Parsing: structure is information
+
+Consider this small source:
+
+~~~text
+# Late submissions
+Late work loses 10 percent per calendar day.
+
+# Approved extensions
+The revised deadline replaces the original deadline.
+~~~
+
+A plain text extractor may return the sentences but lose which heading belongs to which sentence. A structure-aware parser returns both the text and its context.
+
+| Extracted block | Heading metadata |
+|---|---|
+| Late work loses 10 percent per calendar day. | Late submissions |
+| The revised deadline replaces the original deadline. | Approved extensions |
+
+For PDF sources, also preserve page numbers and document version. For HTML, preserve meaningful headings and links. For tables, retain the column headers with each row; a row without its header can be difficult to interpret.
+
+## C. Chunk boundaries: why context can disappear
+
+~~~text
+Original paragraph:
+"Late work loses 10 percent per calendar day unless an
+extension has been approved. The deduction is applied to
+the assignment score, not the course grade."
+
+Bad split:
+Chunk A: "Late work loses 10 percent per calendar day unless"
+Chunk B: "an extension has been approved. The deduction is
+          applied to the assignment score, not the course grade."
+
+Better structure-aware result:
+Chunk A: [Late submissions]
+         "Late work loses 10 percent per calendar day unless
+          an extension has been approved."
+
+Chunk B: [Late submissions]
+         "The deduction is applied to the assignment score,
+          not the course grade."
+~~~
+
+The better split retains the heading and sentence boundaries. In some corpora, a sentence may still be too long, so a second-stage split is necessary. Chunking is a design choice to test, not a universal formula.
+
+## D. Character windows versus token windows
+
+The starter project uses character windows because they are simple to inspect and need no tokenizer dependency. But model limits are generally expressed in tokens.
+
+~~~text
+Characters: a count of text symbols
+Tokens:     units produced by a model tokenizer
+Words:      language-dependent units separated imperfectly by spaces
+~~~
+
+A word can map to one token or several. Punctuation, code, URLs, and different languages change tokenization. For production, use the tokenizer or token-counting method appropriate to the selected model and leave room for special tokens and instructions.
+
+## E. Embedding generation: batch view
+
+~~~mermaid
+flowchart TD
+    A["Chunk records"] --> B["Select text fields"]
+    B --> C["Embedding model"]
+    C --> D["Batch of vectors"]
+    D --> E["Validate vector count"]
+    E --> F["Validate dimensions"]
+    F --> G["Attach vectors to matching chunk IDs"]
+    G --> H["Persist records"]
+~~~
+
+Batching improves throughput by processing several passages together. Keep the order mapping between input texts and returned vectors. Validate that the number of vectors equals the number of input chunks and that every vector has the expected dimension.
+
+## F. Vector dimensions and storage
+
+For float32 storage, each coordinate uses 4 bytes before database/index overhead.
+
+| Dimensions | Bytes per vector | Approx. decimal KB |
+|---:|---:|---:|
+| 384 | 1,536 | 1.54 KB |
+| 768 | 3,072 | 3.07 KB |
+| 1,024 | 4,096 | 4.10 KB |
+| 1,536 | 6,144 | 6.14 KB |
+
+For 250,000 chunks with 768-dimensional float32 vectors:
+
+[
+250{,}000 \times 768 \times 4 = 768{,}000{,}000 \text{ bytes}
+]
+
+That is about **768 MB** in decimal units for raw vectors. Index structures, IDs, metadata, text, replicas, and backups add overhead.
+
+## G. Cosine similarity with normalized vectors
+
+If vectors are normalized to length 1, cosine similarity is simply their dot product:
+
+[
+\operatorname{cosine}(a,b)=a\cdot b
+]
+
+Toy example:
+
+[
+a=[0.6,0.8], \quad b=[0.8,0.6]
+]
+
+[
+a\cdot b=(0.6)(0.8)+(0.8)(0.6)=0.96
+]
+
+This example is intentionally two-dimensional to make the arithmetic visible. Real embeddings are high-dimensional. The score is a similarity measure, not a probability or factuality guarantee.
+
+## H. What should be stored with every chunk?
+
+| Field | Why it matters |
+|---|---|
+| chunk_id | Identifies one passage |
+| document_id | Groups passages from the same source |
+| source_path or URI | Finds the original source |
+| document_version | Distinguishes revisions |
+| page / section / heading | Supports citations and context |
+| start and end offsets | Helps locate text in the source |
+| content hash | Detects source changes |
+| embedding_model | Identifies the vector space |
+| embedding_dimension | Validates compatibility |
+| access metadata | Supports authorization filters |
+
+The starter project includes core provenance fields. Page-level PDF offsets, version lifecycle, model registry, and access-control metadata are useful next implementation steps.
+
+## I. Debugging a bad embedding search
+
+~~~mermaid
+flowchart TD
+    A["Relevant chunk not retrieved"] --> B["Inspect extracted source text"]
+    B --> C["Inspect chunk and heading"]
+    C --> D["Check embedding model and dimension"]
+    D --> E["Compare query and passage encoding"]
+    E --> F["Inspect candidate rankings"]
+    F --> G["Evaluate with labelled queries"]
+~~~
+
+Do not immediately swap the model. First check whether the source was extracted correctly, whether the chunk contains the answer, whether the right model produced both query and document vectors, and whether the relevant chunk appears among the candidates.
+
+## J. Experiment: compare chunking choices
+
+Create a small set of 10–20 realistic questions about the sample policy. For each question, record which chunk contains the answer. Then compare at least two chunking strategies.
+
+| Experiment | Configuration | What to observe |
+|---|---|---|
+| A | 300-character chunks, no overlap | Baseline boundaries |
+| B | 300 characters, 50 overlap | Boundary recovery and duplicates |
+| C | Paragraph / heading-aware | Context preservation |
+| D | Smaller or larger chunks | Recall, noise, and latency |
+
+Measure Recall@K and inspect actual retrieved text. A strategy that returns more chunks is not necessarily better; the evidence must be relevant and understandable.
+
