@@ -20,7 +20,7 @@ See [CURRICULUM.md](CURRICULUM.md) for the complete 9-module roadmap. The full [
 
 ## Nine-module learning curriculum
 
-The repository has a guide page for each module. **Module 1 is currently the only full-length chapter; Modules 2–9 currently contain their architecture diagrams, topic outlines, and implementation milestones and are awaiting full chapter development.**
+The repository has a guide page for each module. Modules 1–3 now have detailed learning guides. Module 3 also has a runnable Python document-processing and embedding project with sample data and unit tests. Modules 4–9 remain on the roadmap and will be expanded next.
 
 1. [Module 1 — Foundations of Agentic AI](MODULE_1_FOUNDATIONS.md) — full learning guide
 2. [Module 2 — RAG Fundamentals](MODULE_2_RAG_FUNDAMENTALS.md)
@@ -34,6 +34,7 @@ The repository has a guide page for each module. **Module 1 is currently the onl
 
 ## Implementations
 - [Module 1 Python implementation and tests](implementations/module-1-foundations/README.md)
+- [Module 3 document-processing and embedding pipeline](implementations/module-3-document-processing/README.md) — sample Markdown/text ingestion, chunking, metadata, optional embeddings, JSONL output, semantic search, and tests.
 
 ## Separate company-practices library
 This is an independent case-study and practice track, separate from the nine-module learning curriculum.
