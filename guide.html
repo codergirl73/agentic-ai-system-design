@@ -79,7 +79,9 @@ const modules={
   const track=document.createElement('div');track.className='flow-track';
   (flowSteps[key]||flowSteps["1"]).forEach((step,i)=>{if(i){const arrow=document.createElement('span');arrow.className='flow-arrow';arrow.textContent='→';track.append(arrow);}const node=document.createElement('span');node.className='flow-step';node.textContent=step;track.append(node);});
   const caption=document.createElement('div');caption.className='flow-caption';caption.textContent='Follow the highlighted stages from left to right. The full lesson explains each component and its trade-offs.';
-  flow.append(flowTitle,track,caption);intro.after(flow);
+  flow.append(flowTitle,track,caption);
+  const lessonIntro=article.querySelector('.lesson-intro');
+  if(lessonIntro) lessonIntro.after(flow); else article.prepend(flow);
   const toc=document.getElementById('toc');toc.innerHTML='';
   article.querySelectorAll('h2,h3').forEach((heading,index)=>{
     const id='section-'+index;heading.id=id;
