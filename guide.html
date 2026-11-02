@@ -22,7 +22,7 @@ window.renderMermaid = async () => { const nodes = document.querySelectorAll('pr
 <div class="reading-progress" id="reading-progress"></div>
 <header class="top"><div class="wrap topin"><a class="brand" href="./index.html">AGENTIC<b>.SYSTEMS</b></a><div class="top-actions"><button class="expand-toggle" id="expand-toggle" type="button" aria-pressed="false">⤢ Expand lesson</button><a class="back" href="./index.html#curriculum">← Back to curriculum</a></div></div></header>
 <div class="wrap layout">
-<aside class="side"><div class="eyebrow">Curriculum</div><a href="?module=1" data-module="1">01 · Foundations</a><a href="?module=2" data-module="2">02 · RAG fundamentals</a><a href="?module=3" data-module="3">03 · Documents & embeddings</a><a href="?module=4" data-module="4">04 · Information retrieval</a><a href="?module=5" data-module="5">05 · Advanced retrieval</a><a href="?module=6" data-module="6">06 · Advanced RAG</a><a href="?module=7" data-module="7">07 · Agent architecture</a><a href="?module=8" data-module="8">08 · Production engineering</a><a href="?module=9" data-module="9">09 · End-to-end design</a></aside>
+<aside class="side"><div class="eyebrow">Curriculum</div><a href="?module=1" data-module="1">01 · Foundations</a><a href="?module=2" data-module="2">02 · RAG fundamentals</a><a href="?module=3" data-module="3">03 · Documents & embeddings</a><a href="?module=4" data-module="4">04 · Information retrieval</a><a href="?module=5" data-module="5">05 · Advanced retrieval</a><a href="?module=6" data-module="6">06 · Advanced RAG</a><a href="?module=7" data-module="7">07 · Agent architecture</a><a href="?module=8" data-module="8">08 · Production engineering</a><a href="?module=9" data-module="9">09 · End-to-end design</a><div class="eyebrow" style="margin-top:20px">GPU track</div><a href="?module=gpu-1" data-module="gpu-1">GPU-01 · Computer architecture</a></aside>
 <main class="content" id="article"><div class="loading">Loading your learning guide…</div></main>
 <aside class="right-rail" aria-label="Page contents"><div class="tocwrap"><div class="eyebrow">On this page</div><nav id="toc" aria-label="On this page"><span class="toc-empty">Contents will appear here</span></nav></div></aside>
 </div>
@@ -43,7 +43,8 @@ const modules={
 "7":{file:"MODULE_7_AGENT_ARCHITECTURE.md",title:"Module 7 — Agent Architecture & Orchestration"},
 "8":{file:"MODULE_8_PRODUCTION_ENGINEERING.md",title:"Module 8 — Production Engineering"},
 "9":{file:"MODULE_9_END_TO_END_SYSTEM_DESIGN.md",title:"Module 9 — End-to-End System Design"},
-"interviews":{file:"SYSTEM_DESIGN_INTERVIEWS.md",title:"System Design Interview Preparation"}
+"interviews":{file:"SYSTEM_DESIGN_INTERVIEWS.md",title:"System Design Interview Preparation"},
+"gpu-1":{file:"GPU_01_COMPUTER_ARCHITECTURE.md",title:"GPU-01 — Computer Architecture for GPU Programmers"}
 };
 (async()=>{
  const key=new URLSearchParams(location.search).get('module')||'1', item=modules[key]||modules["1"];
@@ -72,7 +73,8 @@ const modules={
    "6":["Classify","Retrieve","Check","Refine","Answer"],
    "7":["Request","Plan","Select tool","Approve","Execute","Observe"],
    "8":["Instrument","Trace","Evaluate","Secure","Deploy","Monitor"],
-   "9":["Requirements","Estimate","Design","Implement","Test","Operate"]
+   "9":["Requirements","Estimate","Design","Implement","Test","Operate"],
+   "gpu-1":["CPU vs GPU","Parallelism","SMs & warps","Memory hierarchy","Bandwidth","Roofline"]
   };
   const flow=document.createElement('section');flow.className='flow-explainer';flow.setAttribute('aria-label','Animated system flow');
   const flowTitle=document.createElement('div');flowTitle.className='flow-title';flowTitle.textContent='System flow · animated overview';
