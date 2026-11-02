@@ -2,7 +2,7 @@
 
 ## Module 1 — Foundations of Agentic AI
 
-**Full learning material:** [MODULE_1_FOUNDATIONS.md](MODULE_1_FOUNDATIONS.md) — detailed explanations, architecture diagrams, execution flow, failure handling, research assistant system design, interview answers, and exercises.
+**Full learning material:** [MODULE_1_FOUNDATIONS.md](MODULE_1_FOUNDATIONS.md) — detailed explanations, original architecture illustration, Mermaid diagrams, execution flow, failure handling, research assistant system design, interview answers, and exercises.
 
 **Python implementation:** [implementations/module-1-foundations/](implementations/module-1-foundations/) — dependency-free agent and unit tests.
 1. What is an AI agent?
@@ -15,7 +15,7 @@
 
 ## Module 2 — RAG Fundamentals
 
-**Module guide and embedded architecture:** [MODULE_2_RAG_FUNDAMENTALS.md](MODULE_2_RAG_FUNDAMENTALS.md)
+**Module guide and visual architecture:** [MODULE_2_RAG_FUNDAMENTALS.md](MODULE_2_RAG_FUNDAMENTALS.md) — original RAG pipeline illustration, Mermaid diagrams, worked examples, implementation, and evaluation.
 1. What is Retrieval-Augmented Generation (RAG)?
 2. Why RAG: freshness, grounding, and provenance
 3. RAG vs fine-tuning vs long-context prompting
@@ -26,7 +26,7 @@
 
 ## Module 3 — Document Processing and Embeddings
 
-**Module guide and embedded architecture:** [MODULE_3_DOCUMENT_PROCESSING.md](MODULE_3_DOCUMENT_PROCESSING.md)
+**Module guide and visual architecture:** [MODULE_3_DOCUMENT_PROCESSING.md](MODULE_3_DOCUMENT_PROCESSING.md) — original document pipeline illustration, Mermaid diagrams, chunking and embedding examples, Python project, and tests.
 1. Document ingestion and parsing
 2. Cleaning, normalization, and metadata
 3. Chunking strategies and overlap
@@ -38,7 +38,7 @@
 
 ## Module 4 — Information Retrieval
 
-**Module guide and embedded architecture:** [MODULE_4_INFORMATION_RETRIEVAL.md](MODULE_4_INFORMATION_RETRIEVAL.md)
+**Detailed module guide:** [MODULE_4_INFORMATION_RETRIEVAL.md](MODULE_4_INFORMATION_RETRIEVAL.md) — BM25, dense and hybrid retrieval, metrics, worked calculations, Python metric implementation, tests, and interview practice.
 1. Information retrieval foundations
 2. Lexical retrieval and inverted indexes
 3. BM25 and sparse retrieval
@@ -50,7 +50,7 @@
 
 ## Module 5 — Advanced Retrieval
 
-**Module guide and embedded architecture:** [MODULE_5_ADVANCED_RETRIEVAL.md](MODULE_5_ADVANCED_RETRIEVAL.md)
+**Detailed module guide:** [MODULE_5_ADVANCED_RETRIEVAL.md](MODULE_5_ADVANCED_RETRIEVAL.md) — query rewriting, decomposition, HyDE, reranking, RRF, implementation, tests, and evaluation.
 1. Query rewriting and normalization
 2. Multi-query retrieval
 3. Query expansion and decomposition
@@ -63,7 +63,7 @@
 
 ## Module 6 — Advanced RAG
 
-**Module guide and embedded architecture:** [MODULE_6_ADVANCED_RAG.md](MODULE_6_ADVANCED_RAG.md)
+**Detailed module guide:** [MODULE_6_ADVANCED_RAG.md](MODULE_6_ADVANCED_RAG.md) — adaptive and corrective RAG, multi-hop retrieval, Graph RAG, bounded control loops, implementation, and tests.
 1. Context assembly and contextual compression
 2. Multi-hop and iterative retrieval
 3. Self-RAG
@@ -76,7 +76,7 @@
 
 ## Module 7 — Agent Architecture and Orchestration
 
-**Module guide and embedded architecture:** [MODULE_7_AGENT_ARCHITECTURE.md](MODULE_7_AGENT_ARCHITECTURE.md)
+**Detailed module guide:** [MODULE_7_AGENT_ARCHITECTURE.md](MODULE_7_AGENT_ARCHITECTURE.md) — tool schemas, orchestration, state machines, multi-agent patterns, approval, implementation, and tests.
 1. Tool calling and tool schemas
 2. Planning and task decomposition
 3. State, memory, and context management
@@ -90,7 +90,7 @@
 
 ## Module 8 — Production Engineering
 
-**Module guide and embedded architecture:** [MODULE_8_PRODUCTION_ENGINEERING.md](MODULE_8_PRODUCTION_ENGINEERING.md)
+**Detailed module guide:** [MODULE_8_PRODUCTION_ENGINEERING.md](MODULE_8_PRODUCTION_ENGINEERING.md) — evaluation, observability, reliability, cost, security, privacy, deployment, and testing.
 1. Evaluation datasets and offline evaluation
 2. Tracing, observability, and debugging
 3. Reliability, retries, timeouts, and fallbacks
@@ -103,7 +103,7 @@
 
 ## Module 9 — End-to-End System Design Projects
 
-**Module guide and embedded Mermaid architecture:** [MODULE_9_END_TO_END_SYSTEM_DESIGN.md](MODULE_9_END_TO_END_SYSTEM_DESIGN.md)
+**Detailed module guide:** [MODULE_9_END_TO_END_SYSTEM_DESIGN.md](MODULE_9_END_TO_END_SYSTEM_DESIGN.md) — requirements, capacity estimates, architecture, APIs, data models, project scenarios, and capstone.
 1. Enterprise knowledge assistant
 2. Research assistant with source verification
 3. Customer-support agent
