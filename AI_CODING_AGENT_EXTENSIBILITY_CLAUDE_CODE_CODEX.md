@@ -579,7 +579,7 @@ Use official documentation as the source of truth because hook events, fields, a
 - [Claude Code — Automate actions with hooks](https://code.claude.com/docs/en/hooks-guide)
 - [Anthropic — Steering Claude Code: skills, hooks, rules, and subagents](https://claude.com/resources/articles/steering-claude-code-skills-hooks-rules-subagents-and-more)
 - [OpenAI Codex — Hooks](https://learn.chatgpt.com/docs/hooks)
-- [OpenAI Codex — Configuration reference in the Codex repository](https://github.com/openai/codex/blob/main/docs/config.md)
+- [OpenAI Codex — Configuration reference in the Codex repository](https://learn.chatgpt.com/docs/config-file/config-advanced)
 - [OpenAI Codex — AGENTS.md guidance](https://developers.openai.com/codex/guides/agents-md)
 
 ### Versioning note
