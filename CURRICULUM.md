@@ -121,6 +121,14 @@ Company-specific engineering case studies and system-design practice are maintai
 
 Use these resources alongside the curriculum when you want to apply module concepts to company-inspired scenarios. They are not additional curriculum modules.
 
+## Specialized track — AI Coding Agent Extensibility
+
+This practical track complements the nine core modules and covers how to extend and govern AI coding environments with Claude Code and OpenAI Codex.
+
+- [AI Coding Agent Extensibility — Claude Code and Codex](AI_CODING_AGENT_EXTENSIBILITY_CLAUDE_CODE_CODEX.md) — lifecycle fundamentals, hooks, event matchers, configuration, instructions, skills, subagents, MCP, plugins, permissions, trust review, safe examples, tests, and system-design practice.
+
+**Learning sequence:** Agent runtime fundamentals → extension mechanisms → Claude Code hooks → Codex hooks → event input/output → safe automation → trust and security → cross-platform design.
+
 ## Topic completion standard
 A topic is complete when you can explain it from first principles, draw its architecture, implement and test its core idea, answer interview questions, discuss limitations and trade-offs, and identify relevant research when meaningful.
 
