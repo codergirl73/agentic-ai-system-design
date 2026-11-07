@@ -66,6 +66,12 @@ Follow the learning journey and AI research explainers on Instagram: **[@frontie
 Review commits for personal information, API keys, credentials, private datasets, and copyrighted PDFs. Prefer linking to official paper pages or open-access versions instead of uploading copyrighted PDFs.
 
 
+## AI Coding Agent Extensibility — Claude Code & Codex
+
+A practical beginner-to-advanced track covering hooks, lifecycle events, instructions, skills, subagents, MCP, plugins, permissions, trust, and secure automation in Claude Code and OpenAI Codex.
+
+- [AI Coding Agent Extensibility guide](AI_CODING_AGENT_EXTENSIBILITY_CLAUDE_CODE_CODEX.md) — concepts, Mermaid lifecycle diagrams, separate Claude Code and Codex configurations, safe Python examples, tests, security checklists, exercises, and interview/system-design practice.
+
 ## GPU Computing & AI Infrastructure
 
 A dedicated beginner-to-advanced track covering computer architecture, GPU execution and memory, CUDA programming, deep-learning computation, LLM inference, serving engines, multi-GPU systems, and production operations.
